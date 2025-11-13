@@ -1,15 +1,23 @@
+// server/app.js
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 const app = express();
 
-app.use(cors());
+// Middleware
 app.use(express.json());
 
+// Routes
+app.use("/api/auth", authRoutes);
+
+// Root route
 app.get("/", (req, res) => {
-  res.send("Server is running successfully ");
+  res.send("InterXview API with PostgreSQL is running!");
 });
 
-app.listen(5000, () => console.log(" Server started on http://localhost:5000"));
+// Start server
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`);
+});
