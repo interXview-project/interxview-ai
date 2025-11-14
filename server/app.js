@@ -2,6 +2,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
+import { testDBConnection } from "./config/db.js";
 
 dotenv.config();
 const app = express();
@@ -16,8 +17,12 @@ app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => {
   res.send("InterXview API with PostgreSQL is running!");
 });
-
+app.get("/test", (req, res) => {
+  res.json({ message: "API is working" });
+});
 // Start server
+const PORT = process.env.PORT;
 app.listen(process.env.PORT, () => {
-  console.log(`Server running on http://localhost:${process.env.PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
+  testDBConnection();
 });
