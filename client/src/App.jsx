@@ -1,9 +1,7 @@
-function App() {
+export default function App() {
   return (
-    <div className="bg-blue-500 text-white h-screen flex items-center justify-center text-4xl font-bold">
-      Tailwind is working 🎉
+    <div className="bg-green-600 text-white p-10 text-4xl font-bold">
+      Tailwind is working now 🎉💚
     </div>
   );
 }
-
-export default App;
