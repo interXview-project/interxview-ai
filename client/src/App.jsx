@@ -1,9 +1,21 @@
-function App() {
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar.jsx";
+import Home from "./pages/Home.jsx";
+import Interview from "./pages/Interview.jsx";
+import CVAnalyzer from "./pages/CvAnalyzer.jsx";
+import Login from "./pages/Login.jsx";
+
+export default function App() {
   return (
-    <div className="bg-blue-500 text-white h-screen flex items-center justify-center text-4xl font-bold">
-      Tailwind is working 🎉
-    </div>
+    <BrowserRouter>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/interview" element={<Interview />} />
+        <Route path="/cv-analyzer" element={<CVAnalyzer />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
