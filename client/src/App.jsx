@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { LoginScreen } from './components/LoginScreen';
-import { SignupScreen } from './components/SignupScreen';
+import { LoginScreen } from './pages/LoginScreen';
+import { SignupScreen } from './pages/SignupScreen';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('login');

@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { Input } from './Input';
-import { PrimaryButton } from './PrimaryButton';
-import { TextLink } from './TextLink';
-import { AIArtwork } from './AIArtwork';
+import { Input } from "../components/Input";
+import { PrimaryButton } from "../components/PrimaryButton";
+import { TextLink } from "../components/TextLink";
+import { AIArtwork } from "../pages/AIArtwork";
 
 export function LoginScreen({ onSwitchToSignup }) {
   const [email, setEmail] = useState('');
