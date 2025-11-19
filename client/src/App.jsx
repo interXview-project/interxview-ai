@@ -3,7 +3,7 @@ import Navbar from "./components/navbar.jsx";
 import Home from "./pages/Home.jsx";
 import Interview from "./pages/Interview.jsx";
 import CVAnalyzer from "./pages/CvAnalyzer.jsx";
-import Login from "./pages/Login.jsx";
+import Login from "./pages/LoginScreen.jsx";
 
 export default function App() {
   return (
