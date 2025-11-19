@@ -1,6 +1,6 @@
 import { ChevronLeft } from 'lucide-react';
 
-export function TextLink({ onClick, children, showIcon = true }) {
+export default function TextLink({ onClick, children, showIcon = true }) {
   return (
     <button
       onClick={onClick}
