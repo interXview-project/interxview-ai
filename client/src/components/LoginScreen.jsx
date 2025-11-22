@@ -1,3 +1,4 @@
+// client/src/components/LoginScreen.jsx
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Input } from './Input';
@@ -33,26 +34,40 @@ export function LoginScreen({ onSwitchToSignup }) {
 
     setLoading(true);
 
+    // try {
+    //   // Send login request to backend
+    //   const response = await axios.post('http://localhost:5000/api/auth/login', {
+    //     email,
+    //     password
+    //   });
+
+    //   // Save JWT token
+    //   localStorage.setItem('token', response.data.token);
+
+    //   toast.success('Login successful!');
+    //   console.log('Login successful:', response.data);
+
+    // } catch (err) {
+    //   if (err.response && err.response.data) {
+    //     toast.error(err.response.data.message);
+    //   } else {
+    //     toast.error('Network error. Please try again.');
+    //   }
+    // } 
     try {
-      // Send login request to backend
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password
-      });
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
-      // Save JWT token
       localStorage.setItem('token', response.data.token);
-
       toast.success('Login successful!');
-      console.log('Login successful:', response.data);
-
     } catch (err) {
       if (err.response && err.response.data) {
         toast.error(err.response.data.message);
       } else {
         toast.error('Network error. Please try again.');
       }
-    } finally {
+    }
+
+    finally {
       setLoading(false);
     }
   };
