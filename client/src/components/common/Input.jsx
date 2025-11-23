@@ -1,4 +1,4 @@
-export function Input({ label, className = '', ...props }) {
+export default function Input({ label, className = '', ...props }) {
   return (
     <div className="w-full max-w-[400px]">
       {label && (

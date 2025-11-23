@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
-import aiIcon from '../assets/interxview-logo.png';
+import aiIcon from "../../assets/interxview-logo.png";
 
 
-export function AIArtwork() {
+export default function AIArtwork() {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {

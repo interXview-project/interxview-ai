@@ -1,4 +1,4 @@
-export function PrimaryButton({ children, className = '', ...props }) {
+export default function PrimaryButton({ children, className = '', ...props }) {
   return (
     <button
       className={`
