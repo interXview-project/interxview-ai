@@ -9,31 +9,22 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import './index.css';
 
 export default function App() {
+  const routes = [
+    { name: "Home", path: "/" },
+    { name: "Interview", path: "/interview" },
+    { name: "CV Analyzer", path: "/cv-analyzer" },
+  ];
+
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Navbar />
+        <Navbar routes={routes} />
         <Routes>
           <Route path="/" element={<Home />} />
 
           {/* Protected pages */}
-          <Route
-            path="/interview"
-            element={
-              <ProtectedRoute>
-                <Interview />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/cv-analyzer"
-            element={
-              <ProtectedRoute>
-                <CVAnalyzer />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/interview" element={<ProtectedRoute> <Interview /> </ProtectedRoute>} />
+          <Route path="/cv-analyzer" element={<ProtectedRoute> <CVAnalyzer /> </ProtectedRoute>} />
 
           {/* Public page */}
           <Route path="/login" element={<Login />} />
