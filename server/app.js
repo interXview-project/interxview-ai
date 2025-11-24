@@ -3,8 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import { testDBConnection } from "./config/db.js";
-import cors from 'cors';
-
+import cors from "cors";
+import interviewRoutes from "./routes/interviewRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -15,6 +15,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/interview", interviewRoutes);
 
 // Root route
 app.get("/", (req, res) => {
