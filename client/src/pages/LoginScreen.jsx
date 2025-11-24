@@ -1,49 +1,58 @@
+// client/src/pages/LoginScreen.jsx
 import { motion } from "motion/react";
 import { useState } from "react";
+import axios from "axios";
 import { Input } from "../components/Input";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { TextLink } from "../components/TextLink";
-import { AIArtwork } from "../pages/AIArtwork";
+import { AIArtwork } from "./AIArtwork";
+import toast from "react-hot-toast";
 
 export default function LoginScreen({ onSwitchToSignup }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const validateEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
+  // Email validation
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
 
-    // Form validation
+    // Validate inputs
     if (!email || !password) {
-      setError("Please fill in all fields.");
+      toast.error("Please fill in all fields.");
       return;
     }
     if (!validateEmail(email)) {
-      setError("Please enter a valid email.");
+      toast.error("Please enter a valid email.");
       return;
     }
 
     setLoading(true);
 
-    // Simulate login request
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
 
-      // Example check, replace with real API call
-      if (email === "user@example.com" && password === "password123") {
-        console.log("Login successful");
-        setError("");
-        // Redirect or update state
+      // Save token
+      localStorage.setItem("token", response.data.token);
+
+      toast.success("Login successful!");
+      console.log("Login success:", response.data);
+
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        toast.error(err.response.data.message);
       } else {
-        setError("Incorrect email or password.");
+        toast.error("Network error. Please try again.");
       }
-    }, 1500);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,11 +65,7 @@ export default function LoginScreen({ onSwitchToSignup }) {
     >
       {/* Left Column - Form */}
       <motion.div
-        className="relative flex items-center justify-center p-8 bg-gradient-to-br from-[#0f2847] to-[#1a3a5c] bg-opacity-70"
-        style={{
-          background:
-            "linear-gradient(to bottom right, #0f2847 0%, #1a3a5c 100%)",
-        }}
+        className="relative flex items-center justify-center p-8 bg-gradient-to-br from-[#0f2847] to-[#1a3a5c]"
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -104,8 +109,6 @@ export default function LoginScreen({ onSwitchToSignup }) {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </motion.div>
-
-            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <motion.div
               className="pt-2"
