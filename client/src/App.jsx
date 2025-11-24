@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-<<<<<<< HEAD
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Interview from "./pages/Interview";
@@ -8,13 +7,6 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import './index.css';
-=======
-import Navbar from "./components/navbar.jsx";
-import Home from "./pages/Home.jsx";
-import Interview from "./pages/Interview.jsx";
-import CVAnalyzer from "./pages/CvAnalyzer.jsx";
-import Login from "./pages/LoginScreen.jsx";
->>>>>>> 7580a3c2d9b766dca7c47449ddf5ae602ef908b3
 
 export default function App() {
   const routes = [
@@ -24,7 +16,6 @@ export default function App() {
   ];
 
   return (
-<<<<<<< HEAD
     <AuthProvider>
       <BrowserRouter>
         <Navbar routes={routes} />
@@ -40,17 +31,5 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-=======
-    <BrowserRouter>
-      <Navbar />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/interview" element={<Interview />} />
-        <Route path="/cv-analyzer" element={<CVAnalyzer />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
->>>>>>> 7580a3c2d9b766dca7c47449ddf5ae602ef908b3
   );
 }
