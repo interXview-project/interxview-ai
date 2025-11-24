@@ -84,5 +84,3 @@ export default function Login() {
 //   const redirectPath = location.state?.from?.pathname || "/";
 //   return <h1 className="text-3xl p-10">Login Page</h1>;
 // }
-
-
