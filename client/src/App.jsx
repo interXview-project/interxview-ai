@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Interview from "./pages/Interview";
-import CVAnalyzer from "./pages/CvAnalyzer";
-import Login from "./pages/Login";
+// import CVAnalyzer from "./pages/CvAnalyzer";
+import Login from "./pages/LoginScreen.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import "./index.css";
@@ -12,7 +12,7 @@ export default function App() {
   const routes = [
     { name: "Home", path: "/" },
     { name: "Interview", path: "/interview" },
-    { name: "CV Analyzer", path: "/cv-analyzer" },
+    // { name: "CV Analyzer", path: "/cv-analyzer" },
   ];
 
   return (
@@ -32,7 +32,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/cv-analyzer"
             element={
               <ProtectedRoute>
@@ -40,7 +40,7 @@ export default function App() {
                 <CVAnalyzer />{" "}
               </ProtectedRoute>
             }
-          />
+          /> */}
 
           {/* Public page */}
           <Route path="/login" element={<Login />} />
