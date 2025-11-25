@@ -15,8 +15,7 @@ export default function AnswersColumn({ messages, loading }) {
     return (
         <div
             ref={containerRef}
-            className="w-1/2 p-4 overflow-auto flex flex-col gap-2"
-        >
+            className="w-2/3 p-6 overflow-y-auto flex flex-col gap-4 bg-[#0D1235] border-l border-[#1E2A55] ">
             {messages.length === 0 && !loading && (
                 <p className="text-gray-400 italic">Start your interview</p>
             )}
@@ -26,7 +25,7 @@ export default function AnswersColumn({ messages, loading }) {
             ))}
 
             {loading && (
-                <div className="self-start bg-gray-700 p-2 rounded max-w-xs flex items-center">
+                <div className="self-start bg-gray-700 p-3 rounded-lg max-w-xs flex items-center">
                     <span className="mr-2">AI is typing</span>
                     <span className="animate-pulse">...</span>
                 </div>

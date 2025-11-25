@@ -24,8 +24,8 @@ export default function Interview() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col bg-[#0a1628] text-white">
-      <div className="flex-1 overflow-auto">
+    <div className="w-full h-screen flex flex-col bg-[#0A0E27] text-white pt-28">
+      <div className="flex-1 overflow-hidden flex">
         <ChatContainer messages={messages} loading={loading} />
       </div>
       <InputArea onSend={handleSend} disabled={loading} />
