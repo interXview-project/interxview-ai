@@ -1,4 +1,3 @@
-// src/components/ChatContainer.jsx
 import React from "react";
 import QuestionsColumn from "./QuestionsColumn";
 import AnswersColumn from "./AnswersColumn";

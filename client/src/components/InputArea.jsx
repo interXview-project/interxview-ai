@@ -1,4 +1,3 @@
-// src/components/InputArea.jsx
 import React, { useState } from "react";
 import PrimaryButton from "../components/common/PrimaryButton";
 

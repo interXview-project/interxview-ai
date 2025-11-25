@@ -1,4 +1,3 @@
-// src/pages/Interview.jsx
 import React, { useState } from "react";
 import ChatContainer from "../components/ChatContainer";
 import InputArea from "../components/InputArea";
@@ -10,14 +9,18 @@ export default function Interview() {
   const handleSend = async (text) => {
     if (!text) return;
 
-    const newUserMsg = { sender: "user", message: text };
+    const newUserMsg = { sender: "user", message: text, timestamp: new Date().toISOString() };
     setMessages((prev) => [...prev, newUserMsg]);
 
     setLoading(true);
 
     // Simulate AI response (replace with actual API call)
     setTimeout(() => {
-      const aiResponse = { sender: "AI", message: "This is a simulated AI response." };
+      const aiResponse = {
+        sender: "AI",
+        message: "This is a simulated AI response.",
+        timestamp: new Date().toISOString(),
+      };
       setMessages((prev) => [...prev, aiResponse]);
       setLoading(false);
     }, 1500);
