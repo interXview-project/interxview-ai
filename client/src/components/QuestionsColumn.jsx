@@ -1,4 +1,3 @@
-// src/components/QuestionsColumn.jsx
 import React from "react";
 
 export default function QuestionsColumn() {
