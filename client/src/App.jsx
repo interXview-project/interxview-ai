@@ -5,36 +5,36 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/LoginScreen.jsx";
 import SignUp from "./pages/SignupScreen.jsx";
 import Interview from "./pages/Interview.jsx";
-
-import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext.jsx";
-import "./index.css";
 import MockTest from "./pages/MockTest.jsx";
 
+import { AuthProvider } from "./context/AuthContext.jsx";
+import "./index.css";
+
 export default function App() {
-  const routes = [
-    { name: "Home", path: "/" },
-    { name: "Interview", path: "/interview" }, // ← أضفناه
+const routes = [
+{ name: "Home", path: "/" },
+{ name: "Interview", path: "/interview" },
+{ name: "Mock Test", path: "/mock-test" },
+// { name: "CV Analyzer", path: "/cv-analyzer" },
+];
 
-    { name: "Mock Test", path: "/mock-test" },
-    // { name: "CV Analyzer", path: "/cv-analyzer" },
-  ];
+return ( <AuthProvider> <BrowserRouter> <Navbar routes={routes} />
 
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar routes={routes} />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/interview" element={<Interview />} />
+    {/* Wrapper للمحتوى لإضافة padding-top يساوي ارتفاع Navbar */}
+    <main className="pt-20 min-h-screen bg-[#0a1628]">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/interview" element={<Interview />} />
+        <Route path="/mock-test" element={<MockTest />} />
+        {/* <Route path="/cv-analyzer" element={<CVAnalyzer />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </main>
+  </BrowserRouter>
+</AuthProvider>
 
-          <Route path="/mock-test" element={<MockTest />} />
-          {/* <Route path="/cv-analyzer" element={<CVAnalyzer />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  );
+
+);
 }

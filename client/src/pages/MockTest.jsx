@@ -1,33 +1,56 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { mockStartInterview, mockAnswerQuestion } from "../api/mockInterview";
+import { toast } from "react-hot-toast";
 
 export default function MockTest() {
-  const [question, setQuestion] = useState("");
-  const [step, setStep] = useState(0);
+  const [question, setQuestion] = useState(null);
+  const [answer, setAnswer] = useState("");
+  const [questionNumber, setQuestionNumber] = useState(0);
 
   const handleStart = async () => {
-    const data = await mockStartInterview();
-    setQuestion(data.question);
-    setStep(data.questionNumber);
+    try {
+      const data = await mockStartInterview();
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      toast.success("Mock Interview Started!");
+    } catch (err) {
+      toast.error("Failed to start mock interview");
+    }
   };
 
-  const handleNext = async () => {
-    const data = await mockAnswerQuestion();
-    setQuestion(data.question);
-    setStep(data.questionNumber);
+  const handleAnswer = async () => {
+    if (!answer.trim()) {
+      toast.error("Please enter an answer!");
+      return;
+    }
+
+    try {
+      const data = await mockAnswerQuestion();
+      toast.success("Answer Submitted!");
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      setAnswer("");
+    } catch (err) {
+      toast.error("Failed to submit answer");
+    }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Mock Test</h1>
-
-      {step === 0 ? (
-        <button onClick={handleStart}>Start Mock</button>
-      ) : (
-        <>
-          <h2>Q{step}: {question}</h2>
-          <button onClick={handleNext}>Next Question</button>
-        </>
+    <div style={{ padding: "20px", color: "white", backgroundColor: "#0a1628", minHeight: "100vh" }}>
+      <h1>Mock Interview Test</h1>
+      {!question && <button onClick={handleStart}>Start Interview</button>}
+      {question && (
+        <div style={{ marginTop: "10px" }}>
+          <h3>Q{questionNumber}: {question}</h3>
+          <input
+            type="text"
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+            placeholder="Type your answer here..."
+            style={{ marginRight: "10px", color: "black" }} 
+          />
+          <button onClick={handleAnswer}>Submit Answer</button>
+        </div>
       )}
     </div>
   );
