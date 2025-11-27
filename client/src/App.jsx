@@ -21,7 +21,7 @@ const routes = [
 return ( <AuthProvider> <BrowserRouter> <Navbar routes={routes} />
 
 
-    {/* Wrapper للمحتوى لإضافة padding-top يساوي ارتفاع Navbar */}
+
     <main className="pt-20 min-h-screen bg-[#0a1628]">
       <Routes>
         <Route path="/" element={<Home />} />
