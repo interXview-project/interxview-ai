@@ -4,14 +4,14 @@ import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import ChatMessage from "./ChatMessage";
 import TypingDots from "./TypingDots";
- 
+
 export default function ChatContainer({ messages, loading }) {
     const chatRef = useRef();
- 
+
     useEffect(() => {
         chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
     }, [messages, loading]);
- 
+
     return (
         <div
             ref={chatRef}
@@ -31,7 +31,7 @@ export default function ChatContainer({ messages, loading }) {
                     />
                 </motion.div>
             ))}
- 
+
             {loading && (
                 <div className="self-start bg-gray-700 p-3 rounded-lg max-w-xs flex items-center">
                     <TypingDots className="mr-2" />
@@ -41,19 +41,5 @@ export default function ChatContainer({ messages, loading }) {
         </div>
     );
 }
- 
 
 
-
-// import React from "react";
-// import QuestionsColumn from "./QuestionsColumn";
-// import AnswersColumn from "./AnswersColumn";
-
-// export default function ChatContainer({ messages, loading }) {
-//     return (
-//         <div className="flex w-full h-full">
-//             <QuestionsColumn />
-//             <AnswersColumn messages={messages} loading={loading} />
-//         </div>
-//     );
-// }

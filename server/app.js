@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import { testDBConnection } from "./config/db.js";
 import cors from "cors";
-import interviewRoutes from "./routes/interviewRoutes.js";
+import interviewRoutes from "./routes/interview.js";
+// const interviewRoutes = require("./routes/interview.js");
 
 dotenv.config();
 const app = express();
