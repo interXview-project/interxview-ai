@@ -3,7 +3,8 @@ import { Menu, X, LogIn, LogOut, User } from "lucide-react";
 import logo from "../assets/logo-removebg-preview.png";
 import { Link } from "react-router-dom";
 
-export default function Navbar({ routes }) { // استقبل المسارات من App.jsx
+export default function Navbar({ routes = [] }) {
+  // استقبل المسارات من App.jsx
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -14,7 +15,6 @@ export default function Navbar({ routes }) { // استقبل المسارات م
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#0a1628] to-[#0a1628]/98 backdrop-blur-xl border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-3 cursor-pointer group">
             <div className="relative">
@@ -25,7 +25,9 @@ export default function Navbar({ routes }) { // استقبل المسارات م
                 className="h-10 w-10 relative z-10 drop-shadow-[0_0_8px_rgba(14,165,233,0.3)] group-hover:drop-shadow-[0_0_15px_rgba(14,165,233,0.6)] transition-all duration-300"
               />
             </div>
-            <span className="text-white font-semibold text-xl tracking-wide">InterXview AI</span>
+            <span className="text-white font-semibold text-xl tracking-wide">
+              InterXview AI
+            </span>
           </Link>
 
           {/* Desktop Links */}
@@ -54,10 +56,15 @@ export default function Navbar({ routes }) { // استقبل المسارات م
                   <div className="bg-[#0ea5e9]/20 p-1.5 rounded-full">
                     <User size={16} className="text-[#0ea5e9]" />
                   </div>
-                  <span className="text-slate-300 group-hover:text-white transition-colors duration-300">Profile</span>
+                  <span className="text-slate-300 group-hover:text-white transition-colors duration-300">
+                    Profile
+                  </span>
                 </div>
                 <div className="w-px h-5 bg-[#0ea5e9]/30 relative z-10"></div>
-                <LogOut size={16} className="text-[#0ea5e9] relative z-10 group-hover:translate-x-0.5 transition-transform duration-300" />
+                <LogOut
+                  size={16}
+                  className="text-[#0ea5e9] relative z-10 group-hover:translate-x-0.5 transition-transform duration-300"
+                />
               </button>
             ) : (
               <Link
@@ -65,7 +72,10 @@ export default function Navbar({ routes }) { // استقبل المسارات م
                 className="relative flex items-center gap-2 px-6 py-2.5 border-2 border-[#0ea5e9] text-[#0ea5e9] hover:text-white rounded-lg overflow-hidden group shadow-[0_0_15px_rgba(14,165,233,0.3)] hover:shadow-[0_0_25px_rgba(14,165,233,0.6)] transition-all duration-300 cursor-pointer"
               >
                 <span className="absolute inset-0 bg-[#0ea5e9] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300"></span>
-                <LogIn size={18} className="relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                <LogIn
+                  size={18}
+                  className="relative z-10 group-hover:rotate-12 transition-transform duration-300"
+                />
                 <span className="relative z-10">Login</span>
               </Link>
             )}
