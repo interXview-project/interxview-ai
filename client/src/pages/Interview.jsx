@@ -1,6 +1,6 @@
 // client/src/pages/Interview.jsx
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/axiosInstance";
 import ChatContainer from "../components/ChatContainer";
 import InputArea from "../components/InputArea";
 import Sidebar from "../components/Sidebar";
@@ -21,7 +21,7 @@ export default function Interview() {
   const startInterview = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("/api/interview/start", {
+      const res = await api.post("/interview/start", {
         jobRole,
         difficulty,
         interviewType,
@@ -56,12 +56,19 @@ export default function Interview() {
     setLoading(true);
 
     try {
-      const res = await axios.post("/api/interview/answer", { answer: text });
+      const res = await api.post("/interview/answer", {
+        questionNumber,
+        userAnswer: text,
+      });
       const nextQuestion = res.data.question;
 
       // Delay for typing animation
       setTimeout(() => {
-        const aiMsg = { sender: "AI", message: nextQuestion, timestamp: new Date() };
+        const aiMsg = {
+          sender: "AI",
+          message: nextQuestion,
+          timestamp: new Date(),
+        };
         setMessages((prev) => [...prev, aiMsg]);
         setCurrentQuestion(nextQuestion);
         setQuestionNumber((prev) => prev + 1);
