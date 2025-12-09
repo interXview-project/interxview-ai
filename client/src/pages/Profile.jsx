@@ -1,36 +1,27 @@
 // client/src/pages/Profile.jsx
-
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import { User, Trophy, Download, Edit, BarChart, X, Save } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Profile() {
-  const navigate = useNavigate();
-
-  // ================= LOAD USER DATA =================
+  // ================= DEFAULT FALLBACK USER =================
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    role: "",
+    name: "Guest User",
+    email: "guest@example.com",
+    role: "Frontend Developer",
   });
 
+  // Try loading user from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("user");
 
-    // If no user → redirect to login
-    if (!saved) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      setUser(JSON.parse(saved));
-    } catch (err) {
-      console.error("Invalid user in localStorage:", err);
-      localStorage.removeItem("user");
-      navigate("/login");
+    if (saved) {
+      try {
+        setUser(JSON.parse(saved));
+      } catch (err) {
+        console.error("Invalid user data:", err);
+      }
     }
   }, []);
 
@@ -38,16 +29,13 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    role: "",
+    name: user.name,
+    email: user.email,
+    role: user.role,
   });
 
-  // When user changes → update form fields
   useEffect(() => {
-    if (user) {
-      setForm(user);
-    }
+    setForm(user);
   }, [user]);
 
   const handleSave = () => {
@@ -90,13 +78,10 @@ export default function Profile() {
     doc.save("interview-report.pdf");
   };
 
-  // ================= RENDER =================
-
   return (
     <main className="flex flex-col min-h-screen w-full bg-[#0A0E27] text-white px-6 lg:px-12 py-10 mt-20">
       {/* ================= PROFILE HEADER ================= */}
       <section className="mb-10 flex items-center gap-6">
-        {/* AVATAR */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -105,14 +90,19 @@ export default function Profile() {
           <User size={40} className="text-[#3A7BFF]" />
         </motion.div>
 
-        {/* USER INFO */}
         <div>
           <h2 className="text-2xl font-semibold">{user.name}</h2>
           <p className="text-gray-300">{user.email}</p>
           <p className="text-gray-400 text-sm">{user.role}</p>
+
+          {/* Guest mode badge */}
+          {user.email === "guest@example.com" && (
+            <span className="text-xs text-gray-400 italic">
+              Showing example profile (not logged in)
+            </span>
+          )}
         </div>
 
-        {/* EDIT BUTTON */}
         <button
           onClick={() => setIsEditing(true)}
           className="ml-auto bg-[#1A2440] hover:bg-[#24345B] px-4 py-2 rounded-xl border border-white/10 flex items-center gap-2"
@@ -188,7 +178,6 @@ export default function Profile() {
       {isEditing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[999]">
           <div className="bg-[#1A2440] border border-white/10 rounded-2xl p-6 w-[380px] space-y-4">
-            {/* HEADER */}
             <div className="flex justify-between items-center mb-2">
               <h3 className="text-lg font-semibold">Edit Profile</h3>
               <button
@@ -199,7 +188,6 @@ export default function Profile() {
               </button>
             </div>
 
-            {/* INPUTS */}
             <input
               className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-sm outline-none"
               value={form.name}
@@ -221,7 +209,6 @@ export default function Profile() {
               placeholder="Role"
             />
 
-            {/* SAVE BUTTON */}
             <button
               onClick={handleSave}
               className="w-full bg-[#3A7BFF] hover:bg-[#2E6FE0] py-2 rounded-lg flex items-center justify-center gap-2"
