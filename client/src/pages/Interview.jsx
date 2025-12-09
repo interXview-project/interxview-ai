@@ -32,6 +32,7 @@ export default function Interview() {
       const aiMsg = {
         sender: "AI",
         message: firstQuestion,
+        type: "question",
         timestamp: new Date(),
       };
 
@@ -60,18 +61,49 @@ export default function Interview() {
         questionNumber,
         userAnswer: text,
       });
+
       const nextQuestion = res.data.question;
 
-      // Delay for typing animation
+      // Typing delay
       setTimeout(() => {
+        // MOCK values for now
+        const mockScore = Math.floor(Math.random() * 10) + 1;
+        const mockFeedback = "Good answer! Try to give more details next time.";
+
+        // 1️⃣ Add SCORE first
+        setMessages((prev) => [
+          ...prev,
+          {
+            sender: "AI",
+            message: `Score: ${mockScore}/10`,
+            type: "score",
+            timestamp: new Date(),
+          },
+        ]);
+
+        // 2️⃣ Add FEEDBACK second
+        setMessages((prev) => [
+          ...prev,
+          {
+            sender: "AI",
+            message: `Feedback: ${mockFeedback}`,
+            type: "feedback",
+            timestamp: new Date(),
+          },
+        ]);
+
+        // 3️⃣ Add NEXT QUESTION last
         const aiMsg = {
           sender: "AI",
           message: nextQuestion,
+          type: "question",
           timestamp: new Date(),
         };
+
         setMessages((prev) => [...prev, aiMsg]);
         setCurrentQuestion(nextQuestion);
         setQuestionNumber((prev) => prev + 1);
+
         setLoading(false);
       }, 1000);
     } catch (err) {
@@ -79,14 +111,6 @@ export default function Interview() {
       setLoading(false);
     }
   };
-
-  // Optional: Debugging states
-  useEffect(() => {
-    console.log("Messages:", messages);
-    console.log("Current Question:", currentQuestion);
-    console.log("Question Number:", questionNumber);
-    console.log("Loading:", loading);
-  }, [messages, currentQuestion, questionNumber, loading]);
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-[#0A0E27] text-white px-4 py-6 lg:px-8 lg:py-8 mt-20">
@@ -112,7 +136,10 @@ export default function Interview() {
         {/* Chat + Input */}
         <div className="flex flex-col bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 lg:p-6 h-[500px] sm:h-[600px] shadow-xl">
           <ChatContainer messages={messages} loading={loading} />
-          <InputArea onSend={handleSend} disabled={loading} />
+          <InputArea
+            onSend={handleSend}
+            disabled={loading || !currentQuestion}
+          />
         </div>
 
         {/* Sidebar */}
