@@ -6,6 +6,8 @@ import Login from "./pages/LoginScreen.jsx";
 import SignUp from "./pages/SignupScreen.jsx";
 import Interview from "./pages/Interview.jsx";
 // import MockTest from "./pages/MockTest.jsx";
+import Profile from "./pages/Profile.jsx";
+
 import Dashboard from "./pages/Dashboard";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -16,6 +18,8 @@ export default function App() {
     { name: "Home", path: "/" },
     { name: "Interview", path: "/interview" },
     { name: "Dashboard", path: "/dashboard" },
+    { name: "Profile", path: "/profile" },
+
     // { name: "CV Analyzer", path: "/cv-analyzer" },
   ];
 
@@ -29,6 +33,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/interview" element={<Interview />} />
+            <Route path="/profile" element={<Profile />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
 
             {/* <Route path="/mock-test" element={<MockTest />} /> */}

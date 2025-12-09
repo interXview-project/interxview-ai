@@ -1,16 +1,16 @@
 // client/src/pages/LoginScreen.jsx
 import { motion } from "motion/react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Input from "../components/common/Input";
 import PrimaryButton from "../components/common/PrimaryButton";
-import TextLink from "../components/common/TextLink";
 import toast from "react-hot-toast";
-
 import AIArtwork from "../components/features/AIArtwork.jsx";
 
-export default function LoginScreen({ onSwitchToSignup }) {
+export default function LoginScreen() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,19 +36,23 @@ export default function LoginScreen({ onSwitchToSignup }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5173/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         {
           email,
           password,
         }
       );
 
+      // Save token + user
       localStorage.setItem("token", response.data.token);
-      setError("");
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      console.log("Login successful!");
+      toast.success("Login successful!");
+
+      // Redirect to dashboard or home
+      navigate("/");
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
+      if (err.response?.data?.message) {
         toast.error(err.response.data.message);
       } else {
         toast.error("Network error. Please try again.");
@@ -58,6 +62,7 @@ export default function LoginScreen({ onSwitchToSignup }) {
       setLoading(false);
     }
   };
+
   return (
     <motion.div
       className="w-full h-full grid grid-cols-[40%_60%]"
