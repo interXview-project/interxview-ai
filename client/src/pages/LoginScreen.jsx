@@ -1,4 +1,3 @@
-// client/src/pages/LoginScreen.jsx
 import { motion } from "motion/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,15 +8,16 @@ import toast from "react-hot-toast";
 import AIArtwork from "../components/features/AIArtwork.jsx";
 
 export default function LoginScreen() {
+  // ================= STATES =================
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Email validation
+  // ================= VALIDATION =================
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
+  // ================= LOGIN FUNCTION =================
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -26,43 +26,35 @@ export default function LoginScreen() {
       toast.error("Please fill in all fields.");
       return;
     }
-
     if (!validateEmail(email)) {
       toast.error("Please enter a valid email.");
       return;
     }
 
     setLoading(true);
-
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
 
       // Save token + user
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-
       toast.success("Login successful!");
 
-      // Redirect to dashboard or home
+      // Redirect
       navigate("/");
     } catch (err) {
-      if (err.response?.data?.message) {
-        toast.error(err.response.data.message);
-      } else {
-        toast.error("Network error. Please try again.");
-      }
+      if (err.response?.data?.message) toast.error(err.response.data.message);
+      else toast.error("Network error. Please try again.");
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
+  // ================= JSX =================
   return (
     <motion.div
       className="w-full h-full grid grid-cols-[40%_60%]"
@@ -71,7 +63,7 @@ export default function LoginScreen() {
       exit={{ opacity: 0, x: -100 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
     >
-      {/* Left Column - Form */}
+      {/* ================= LEFT COLUMN - FORM ================= */}
       <motion.div
         className="relative flex items-center justify-center p-8 bg-gradient-to-br from-[#0f2847] to-[#1a3a5c]"
         initial={{ x: -100, opacity: 0 }}
@@ -79,6 +71,7 @@ export default function LoginScreen() {
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         <div className="w-full max-w-[400px] space-y-4">
+          {/* Header */}
           <motion.div
             className="mb-8"
             initial={{ y: -20, opacity: 0 }}
@@ -91,7 +84,9 @@ export default function LoginScreen() {
             </p>
           </motion.div>
 
+          {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-4">
+            {/* Email Input */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -105,6 +100,7 @@ export default function LoginScreen() {
               />
             </motion.div>
 
+            {/* Password Input */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -118,6 +114,7 @@ export default function LoginScreen() {
               />
             </motion.div>
 
+            {/* Submit Button */}
             <motion.div
               className="pt-2"
               initial={{ y: 20, opacity: 0 }}
@@ -129,6 +126,7 @@ export default function LoginScreen() {
               </PrimaryButton>
             </motion.div>
 
+            {/* Signup Link */}
             <motion.div
               className="flex flex-col items-center"
               initial={{ opacity: 0 }}
@@ -146,7 +144,7 @@ export default function LoginScreen() {
         </div>
       </motion.div>
 
-      {/* Right Column - AI Artwork */}
+      {/* ================= RIGHT COLUMN - AI ARTWORK ================= */}
       <motion.div
         className="relative bg-[#0a1628]"
         initial={{ x: 100, opacity: 0 }}

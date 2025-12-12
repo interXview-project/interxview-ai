@@ -1,21 +1,31 @@
-// client/src/pages/Interview.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../utils/axiosInstance";
 import ChatContainer from "../components/ChatContainer";
 import InputArea from "../components/InputArea";
 import Sidebar from "../components/Sidebar";
+import InterviewSummary from "../components/InterviewSummary";
 import ProgressSteps from "../components/ProgressSteps";
 
 export default function Interview() {
-  // States
-  const [messages, setMessages] = useState([]); // all chat messages
-  const [loading, setLoading] = useState(false); // AI typing state
-  const [currentQuestion, setCurrentQuestion] = useState(null); // current AI question
-  const [questionNumber, setQuestionNumber] = useState(0); // current question number
+  // ================= STATES =================
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [questionNumber, setQuestionNumber] = useState(0);
 
   const [jobRole, setJobRole] = useState("Frontend Developer");
   const [difficulty, setDifficulty] = useState("Beginner");
   const [interviewType, setInterviewType] = useState("Technical");
+
+  // ================= CLASSES =================
+  const container =
+    "flex flex-col min-h-screen w-full bg-[#0A0E27] text-white px-4 py-6 lg:px-8 lg:py-8 mt-20";
+  const chatWrapper =
+    "flex flex-col bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 lg:p-6 h-[500px] sm:h-[600px] shadow-xl";
+  const headerBtn =
+    "mt-3 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700";
+
+  // ================= FUNCTIONS =================
 
   // Start Interview
   const startInterview = async () => {
@@ -29,14 +39,15 @@ export default function Interview() {
 
       const firstQuestion = res.data.question;
 
-      const aiMsg = {
-        sender: "AI",
-        message: firstQuestion,
-        type: "question",
-        timestamp: new Date(),
-      };
+      setMessages([
+        {
+          sender: "AI",
+          message: firstQuestion,
+          type: "question",
+          timestamp: new Date(),
+        },
+      ]);
 
-      setMessages([aiMsg]);
       setCurrentQuestion(firstQuestion);
       setQuestionNumber(1);
     } catch (err) {
@@ -51,11 +62,12 @@ export default function Interview() {
     if (!text.trim()) return;
 
     // Add user message
-    const userMsg = { sender: "user", message: text, timestamp: new Date() };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [
+      ...prev,
+      { sender: "user", message: text, timestamp: new Date() },
+    ]);
 
     setLoading(true);
-
     try {
       const res = await api.post("/interview/answer", {
         questionNumber,
@@ -64,13 +76,12 @@ export default function Interview() {
 
       const nextQuestion = res.data.question;
 
-      // Typing delay
       setTimeout(() => {
-        // MOCK values for now
+        // MOCK DATA
         const mockScore = Math.floor(Math.random() * 10) + 1;
-        const mockFeedback = "Good answer! Try to give more details next time.";
+        const mockFeedback =
+          "Good answer! Try to give more details next time.";
 
-        // 1️⃣ Add SCORE first
         setMessages((prev) => [
           ...prev,
           {
@@ -81,7 +92,6 @@ export default function Interview() {
           },
         ]);
 
-        // 2️⃣ Add FEEDBACK second
         setMessages((prev) => [
           ...prev,
           {
@@ -92,18 +102,18 @@ export default function Interview() {
           },
         ]);
 
-        // 3️⃣ Add NEXT QUESTION last
-        const aiMsg = {
-          sender: "AI",
-          message: nextQuestion,
-          type: "question",
-          timestamp: new Date(),
-        };
+        setMessages((prev) => [
+          ...prev,
+          {
+            sender: "AI",
+            message: nextQuestion,
+            type: "question",
+            timestamp: new Date(),
+          },
+        ]);
 
-        setMessages((prev) => [...prev, aiMsg]);
         setCurrentQuestion(nextQuestion);
         setQuestionNumber((prev) => prev + 1);
-
         setLoading(false);
       }, 1000);
     } catch (err) {
@@ -112,10 +122,24 @@ export default function Interview() {
     }
   };
 
+  // ================= SUMMARY MODE =================
+  if (questionNumber >= 5) {
+    return (
+      <InterviewSummary
+        onRestart={() => {
+          setMessages([]);
+          setCurrentQuestion(null);
+          setQuestionNumber(0);
+        }}
+      />
+    );
+  }
+
+  // ================= JSX =================
   return (
-    <main className="flex flex-col min-h-screen w-full bg-[#0A0E27] text-white px-4 py-6 lg:px-8 lg:py-8 mt-20">
-      {/* Header */}
-      <div className="mb-6 text-center">
+    <main className={container}>
+      {/* HEADER */}
+      <section className="mb-6 text-center">
         <h1 className="text-white text-xl sm:text-2xl lg:text-3xl font-semibold mb-2">
           AI Interview Simulation
         </h1>
@@ -125,24 +149,28 @@ export default function Interview() {
         <button
           onClick={startInterview}
           disabled={loading}
-          className="mt-3 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700"
+          className={headerBtn}
         >
           Start Interview
         </button>
-      </div>
+      </section>
 
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-4 lg:gap-6 mb-6">
-        {/* Chat + Input */}
-        <div className="flex flex-col bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 lg:p-6 h-[500px] sm:h-[600px] shadow-xl">
-          <ChatContainer messages={messages} loading={loading} />
+      {/* MAIN GRID */}
+      <section className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-4 lg:gap-6 mb-6">
+        {/* CHAT */}
+        <div className={chatWrapper}>
+          <ChatContainer
+            messages={messages}
+            loading={loading}
+            question={currentQuestion}
+          />
           <InputArea
             onSend={handleSend}
             disabled={loading || !currentQuestion}
           />
         </div>
 
-        {/* Sidebar */}
+        {/* SIDEBAR */}
         <div className="lg:block">
           <Sidebar
             jobRole={jobRole}
@@ -153,12 +181,12 @@ export default function Interview() {
             setInterviewType={setInterviewType}
           />
         </div>
-      </div>
+      </section>
 
-      {/* Progress Steps */}
-      <div className="overflow-x-auto">
+      {/* PROGRESS STEPS */}
+      <section className="overflow-x-auto">
         <ProgressSteps currentStep={questionNumber} />
-      </div>
+      </section>
     </main>
   );
 }

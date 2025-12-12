@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
@@ -8,33 +7,33 @@ export default function InputArea({ onSend, disabled }) {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
+  // 🔍 Arabic character regex
   const arabicRegex = /[\u0600-\u06FF]/;
 
   const handleSend = () => {
-    if (!text.trim()) return;
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
-    // Prevent sending if Arabic exists
-    if (arabicRegex.test(text)) {
-      setError("Please answer in English only ");
+    if (arabicRegex.test(trimmed)) {
+      setError("Please answer in English only");
       return;
     }
 
     setError("");
-    onSend(text);
+    onSend(trimmed);
     setText("");
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
+    setText(value);
 
-    // Live validation: show message if Arabic typed
+    // Live validation for Arabic characters
     if (arabicRegex.test(value)) {
-      setError("Please answer in English only ");
+      setError("Please answer in English only");
     } else {
       setError("");
     }
-
-    setText(value);
   };
 
   return (
@@ -46,7 +45,7 @@ export default function InputArea({ onSend, disabled }) {
           onChange={handleChange}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="Write your answer..."
-          className="flex-1 bg-white/5 border border-white/10 text-white placeholder-gray-400 px-4 py-3 rounded-2xl outline-none text-sm backdrop-blur-sm"
+          className="flex-1 bg-white/5 border border-white/10 text-white placeholder-gray-400 px-4 py-3 rounded-2xl outline-none text-sm backdrop-blur-sm transition-colors focus:border-[#3A7BFF]"
         />
 
         <motion.button
