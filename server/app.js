@@ -5,6 +5,8 @@ import authRoutes from "./routes/auth.js";
 import { testDBConnection } from "./config/db.js";
 import cors from "cors";
 import interviewRoutes from "./routes/interview.js";
+import cvRoutes from "./routes/cv.js";
+import { multerErrorHandler } from "./middleware/multerErrorHandler.js";
 // const interviewRoutes = require("./routes/interview.js");
 
 dotenv.config();
@@ -17,6 +19,10 @@ app.use(cors());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/interview", interviewRoutes);
+app.use("/api/cv", cvRoutes);
+app.use(multerErrorHandler);
+
+
 
 // Root route
 app.get("/", (req, res) => {
