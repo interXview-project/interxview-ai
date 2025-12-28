@@ -9,9 +9,9 @@ export default function Home() {
     <main className="bg-gradient-to-br from-[#071b34] via-[#0b2c52] to-[#0e3a66] text-white">
       <Hero />
       <HowItWorks />
-      <HomeStart />
-      <Footer />
-
+      <HomeStart/>
+      <Footer/>
+      
     </main>
   );
 }
