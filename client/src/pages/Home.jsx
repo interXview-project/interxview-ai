@@ -1,3 +1,17 @@
+import Footer from "../components/Footer";
+import Hero from "../components/Hero";
+import HowItWorks from "../components/HowItWorks";
+import HomeStart from "../components/HomeStart";
+
+
 export default function Home() {
-  return <h1 className="text-3xl p-10">Home Page</h1>;
+  return (
+    <main className="bg-gradient-to-br from-[#071b34] via-[#0b2c52] to-[#0e3a66] text-white">
+      <Hero />
+      <HowItWorks />
+      <HomeStart />
+      <Footer />
+
+    </main>
+  );
 }
