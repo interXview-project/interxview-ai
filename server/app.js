@@ -1,11 +1,17 @@
 // server/app.js
+process.env.PDF_PARSE_DISABLE_TESTS = "true";
+
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import { testDBConnection } from "./config/db.js";
 import cors from "cors";
 import interviewRoutes from "./routes/interview.js";
+import cvRoutes from "./routes/cv.js";
+import cvTextRoutes from "./routes/cvText.js";
+import { multerErrorHandler } from "./middleware/multerErrorHandler.js";
 // const interviewRoutes = require("./routes/interview.js");
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -17,6 +23,10 @@ app.use(cors());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/interview", interviewRoutes);
+app.use("/api/cv", cvRoutes);
+app.use(multerErrorHandler);
+app.use("/api/cv-text", cvTextRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Root route
 app.get("/", (req, res) => {

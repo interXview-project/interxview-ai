@@ -1,80 +1,37 @@
 import React from "react";
-/* eslint-disable no-unused-vars */
 
-import { motion } from "motion/react";
- 
-export default function ProgressSteps({ currentStep }) {
-    const steps = ["Introduction", "Technical", "Behavioral", "Final Feedback"];
-    const circleSize = 40;
-    const lineOffset = circleSize / 2 + 24;
- 
-    const stepWidth = 1 / (steps.length - 1);
-    const progressRatio = currentStep - 1 + 0.5;
-    const progressPercent = Math.min(progressRatio * stepWidth * 100, 100);
- 
-    return (
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 shadow-lg">
-            <div className="flex items-center justify-between relative">
- 
-                <div
-                    className="absolute left-0 right-0 h-[4px] rounded-full bg-white/10"
-                    style={{ top: `calc(50% - ${lineOffset}px)`, zIndex: 10 }}
-                />
- 
-                <motion.div
-                    className="absolute h-[4px] rounded-full overflow-hidden"
-                    style={{
-                        top: `calc(50% - ${lineOffset}px)`,
-                        left: 0,
-                        zIndex: 15,
-                    }}
-                    animate={{ width: `calc(${progressPercent}% + ${circleSize / 2}px)` }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                >
-                    <div
-                        className="h-full w-full rounded-full bg-gradient-to-r from-[#3A7BFF]/60 via-[#3A7BFF] to-[#3A7BFF]/60 animate-pulse"
-                        style={{
-                            boxShadow: `0 0 20px 6px #3A7BFF`,
-                        }}
-                    />
-                </motion.div>
- 
-                {steps.map((step, idx) => {
-                    const isActive = currentStep === idx + 1;
-                    const isCompleted = currentStep > idx + 1;
- 
-                    return (
-                        <div key={idx} className="relative flex flex-col items-center z-20">
-                            <motion.div
-                                initial={{ scale: 1 }}
-                                animate={{ scale: isActive ? 1.2 : 1 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center mb-2
-                  ${isActive || isCompleted ? "border-[#3A7BFF] shadow-lg shadow-[#3A7BFF]/70" : "border-white/20"}`}
-                                style={{
-                                    backgroundColor: isActive || isCompleted ? "#3A7BFF" : "rgba(255, 255, 255, 0.1)",
-                                    boxShadow: isActive ? "0 0 20px 6px #3A7BFF" : "",
-                                }}
-                            >
-                                <motion.span
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                    className={`text-sm ${isActive || isCompleted ? "text-white" : "text-gray-500"}`}
-                                >
-                                    {idx + 1}
-                                </motion.span>
-                            </motion.div>
-                            <span
-                                className={`text-xs text-center max-w-[100px] ${isActive || isCompleted ? "text-white" : "text-gray-400"
-                                    }`}
-                            >
-                                {step}
-                            </span>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
+export default function ProgressSteps({ currentStep = 0, total = 10 }) {
+  const percentage =
+    currentStep === 0
+      ? 0
+      : currentStep >= total
+      ? 100
+      : Math.round((currentStep / total) * 100);
+
+  return (
+    <div className="mt-6 bg-white/5 border border-white/10 rounded-2xl p-6 shadow-lg">
+      <div className="flex justify-between items-center mb-3">
+        <p className="text-gray-300 text-sm">Question Progress</p>
+
+        <p className="text-blue-400 font-semibold">
+          {currentStep >= total
+            ? "Final Feedback Loading..."
+            : `${currentStep} / ${total}`}
+        </p>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+        <div
+          className="h-3 bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        ></div>
+      </div>
+
+      {/* Percentage */}
+      <p className="text-center text-gray-400 mt-2 text-sm">
+        {percentage}% Completed
+      </p>
+    </div>
+  );
 }

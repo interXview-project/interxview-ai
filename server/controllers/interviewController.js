@@ -1,48 +1,85 @@
 // server/controllers/interviewController.js
-import { generateInterviewQuestion } from "../services/OpenAIService.js";
-import { generateNextQuestion, evaluateAnswer } from "../services/InterviewLogic.js";
+import {
+  generateEasyQuestion,
+  generateInterviewFeedback,
+} from "../services/OpenAIService.js";
 
+const TOTAL_QUESTIONS = 10;
+
+// ==============================
+// START INTERVIEW
+// ==============================
 async function startInterview(req, res) {
   try {
     const role = req.body?.role || "Software Developer";
-    const question = await generateInterviewQuestion(role);
 
-    return res.json({ question });
+    const firstQuestion = await generateEasyQuestion(role, 1, []);
+
+    return res.json({
+      success: true,
+      questionNumber: 1,
+      totalQuestions: TOTAL_QUESTIONS,
+      isFinished: false,
+      question: firstQuestion,
+      role,
+      previousQuestions: [firstQuestion],
+      answers: [],
+    });
   } catch (err) {
-    console.error("Error generating interview question:", err);
-
-    if (err.status === 404) {
-      return res.status(500).json({
-        error: "AI model not available. Please contact support."
-      });
-    } else if (err.status === 403) {
-      return res.status(500).json({
-        error: "AI service configuration error. Please contact support."
-      });
-    }
-
-    res.status(500).json({ error: "Failed to generate interview question" });
+    console.error("Error starting interview:", err);
+    res.status(500).json({ error: "Failed to start interview" });
   }
 }
 
-function answerInterview(req, res) {
-  const { questionNumber, userAnswer } = req.body;
+// ==============================
+// ANSWER INTERVIEW
+// ==============================
+async function answerInterview(req, res) {
+  try {
+    const { questionNumber, userAnswer, role, answers, previousQuestions } =
+      req.body;
 
-  if (!questionNumber || !userAnswer) {
-    return res.status(400).json({
-      error: "questionNumber and userAnswer are required",
+    if (!questionNumber || !userAnswer || !role) {
+      return res.status(400).json({
+        error: "questionNumber, userAnswer, role are required",
+      });
+    }
+
+    const updatedAnswers = [...(answers || []), userAnswer];
+
+    // FINISH
+    if (questionNumber >= TOTAL_QUESTIONS) {
+      const feedback = await generateInterviewFeedback(role, updatedAnswers);
+
+      return res.json({
+        success: true,
+        isFinished: true,
+        feedback,
+      });
+    }
+
+    // NEXT QUESTION
+    const nextQuestion = await generateEasyQuestion(
+      role,
+      questionNumber + 1,
+      previousQuestions || []
+    );
+
+    return res.json({
+      success: true,
+      isFinished: false,
+      questionNumber: questionNumber + 1,
+      totalQuestions: TOTAL_QUESTIONS,
+      question: nextQuestion,
+      answers: updatedAnswers,
+      previousQuestions: [...(previousQuestions || []), nextQuestion],
+    });
+  } catch (err) {
+    console.error("Error answering interview:", err);
+    res.status(500).json({
+      error: "Failed processing interview answer",
     });
   }
-
-  const evaluation = evaluateAnswer(userAnswer);
-  const nextQuestion = generateNextQuestion(questionNumber);
-
-  return res.json({
-    questionNumber: nextQuestion.questionNumber,
-    question: nextQuestion.question,
-    feedback: evaluation.feedback,
-    score: evaluation.score,
-  });
 }
 
 export { startInterview, answerInterview };

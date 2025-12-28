@@ -1,0 +1,32 @@
+{
+  "sections": [
+    "personal_information",
+    "summary",
+    "experience",
+    "skills",
+    "projects",
+    "education",
+    "certifications",
+    "additional_sections"
+  ],
+  "scoring": {
+    "personal_information": 5,
+    "summary": 10,
+    "experience": 30,
+    "skills": 20,
+    "projects": 15,
+    "education": 10,
+    "certifications": 5,
+    "additional_sections": 5
+  },
+  "feedback_types": [
+    "strengths",
+    "weaknesses",
+    "improvements",
+    "missing_keywords",
+    "rewrite_suggestions",
+    "critical_issues",
+    "clarity_issues",
+    "formatting_issues"
+  ]
+}
