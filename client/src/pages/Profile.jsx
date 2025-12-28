@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import { User, Trophy, Download, Edit, BarChart, X, Save } from "lucide-react";
 import { motion } from "framer-motion";
+import Footer from "../components/Footer";
 
 export default function Profile() {
   // ================= DEFAULT FALLBACK USER =================
@@ -219,6 +220,7 @@ export default function Profile() {
           </div>
         </div>
       )}
+      <Footer/>
     </main>
   );
 }

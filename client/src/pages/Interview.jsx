@@ -5,6 +5,7 @@ import ChatContainer from "../components/ChatContainer";
 import InputArea from "../components/InputArea";
 import Sidebar from "../components/Sidebar";
 import ProgressSteps from "../components/ProgressSteps";
+import Footer from "../components/Footer";
 
 export default function Interview() {
   const [messages, setMessages] = useState([]);

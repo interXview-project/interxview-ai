@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import UploadSection from "../components/UploadSection";
 import AnalysisSection from "../components/AnalysisSection";
 import FinalCTA from "../components/FinalCTA";
+import Footer from "../components/Footer";
 
 export default function CvBoost() {
   const [loading, setLoading] = useState(false);
@@ -65,7 +66,7 @@ export default function CvBoost() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B1026] px-6 pt-12 pb-24 overflow-y-auto">
+    <div className="min-h-screen flex flex-col bg-[#0B1026] px-6 pt-12">
       <Header />
 
       {errorMessage && (
@@ -96,6 +97,7 @@ export default function CvBoost() {
           <FinalCTA />
         </div>
       )}
+      <Footer />
     </div>
   );
 }
