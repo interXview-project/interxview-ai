@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 import Input from "../components/common/Input";
 import PrimaryButton from "../components/common/PrimaryButton";
 import TextLink from "../components/common/TextLink";
@@ -19,7 +21,7 @@ export default function SignupScreen({ onRegisterSuccess }) {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -33,12 +35,26 @@ export default function SignupScreen({ onRegisterSuccess }) {
     if (password !== confirmPassword) { setError('Passwords do not match.'); return; }
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/register", {
+        username: name,
+        email,
+        password,
+      });
+
+      const successMsg = response.data?.message || "Account created successfully! Please log in.";
+      toast.success(successMsg);
       setError('');
-      if (onRegisterSuccess) onRegisterSuccess("Account created successfully! Please log in.");
-      navigate("/login"); 
-    }, 1500);
+      if (onRegisterSuccess) onRegisterSuccess(successMsg);
+      navigate("/login");
+    } catch (err) {
+      const msg = err.response?.data?.message || "Network error. Please try again.";
+      setError(msg);
+      toast.error(msg);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,7 +85,7 @@ export default function SignupScreen({ onRegisterSuccess }) {
       >
         <div className="w-full max-w-[400px] space-y-4">
           {/* Form Header */}
-          <motion.div 
+          <motion.div
             className="mb-8"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

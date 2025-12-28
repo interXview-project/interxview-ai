@@ -1,7 +1,10 @@
 # 🧠 InterXview – Interview API Documentation
 
-This document explains all routes, request bodies, and response formats used by the Interview Module.  
-It is designed so the frontend team can use the API without needing clarification.
+This document explains all API routes, request bodies, and response formats  
+used by the Interview Module.
+
+It is written to allow the frontend team to integrate the interview feature  
+without any backend clarification.
 
 ---
 
@@ -16,144 +19,144 @@ It is designed so the frontend team can use the API without needing clarificatio
 
 ### Description
 
-Returns the first interview question.  
-Does not require any request body.
+Generates and returns the **first interview question dynamically using AI**  
+(Google Gemini), based on the provided role.
 
-### Response Example
+If no role is sent, the default role is **Software Developer**.
+
+### Optional Request Body
 
 ```json
 {
-  "questionNumber": 1,
-  "question": "Tell me about yourself.",
-  "feedback": null,
-  "score": null
+  "role": "Frontend Developer"
 }
-```
+Response Example
+json
+Copy code
+{
+  "question": "What is the difference between REST and SOAP?"
+}
+Notes
+This endpoint does NOT return:
 
----
+questionNumber
 
-## 2️⃣ Submit Answer
+feedback
 
-**Method:** `POST`  
-**Endpoint:** `/api/interview/answer`
+score
 
-### Description
+Question content is generated dynamically by AI.
 
-Sends the user’s answer to the backend.  
-Returns:
+Static interview flow starts from the /answer endpoint.
 
-- feedback based on answer length
-- score
-- next question
+2️⃣ Submit Answer
+Method: POST
+Endpoint: /api/interview/answer
 
-### Required Body
+Description
+Sends the user’s answer to the backend and returns:
 
-```json
+automatic feedback
+
+numeric score
+
+the next interview question (static flow)
+
+Required Body
+json
+Copy code
 {
   "questionNumber": 1,
   "userAnswer": "Your answer here..."
 }
-```
-
-### Response Example
-
-```json
+Response Example
+json
+Copy code
 {
   "questionNumber": 2,
   "question": "Why should we hire you?",
   "feedback": "Good answer, but try to add more details.",
   "score": 7
 }
-```
+📝 Key Field Descriptions
+🔢 questionNumber
+Used only in the /answer endpoint.
 
----
+Represents the index of the static interview question.
 
-# 📝 Key Field Descriptions
+Starts from 1.
 
-### 🔢 questionNumber
+Increases after each submitted answer.
 
-- Represents the current question index.
-- Starts from `1`.
-- Increases automatically after each `/answer`.
-- If last question is reached, the question will repeat (until AI is added).
+If the last question is reached, the last question will repeat.
 
-### 💬 question
+💬 question
+The interview question returned to the frontend.
 
-- The interview question text returned to the frontend.
+Source:
 
-### 🧠 feedback
+/start: Generated dynamically using AI.
 
-Backend auto-evaluates answer based on length:
+/answer: Selected from predefined static questions.
 
-| Answer Length | Feedback                                        |
-| ------------- | ----------------------------------------------- |
-| ≥ 20 words    | "Great detailed answer!"                        |
-| ≥ 10 words    | "Good answer, but try to add more details."     |
-| < 10 words    | "Your answer is too short. Please expand more." |
+🧠 feedback
+Automatically generated based on answer length:
 
-### ⭐ score
+Answer Length	Feedback
+≥ 20 words	"Great detailed answer!"
+≥ 10 words	"Good answer, but try to add more details."
+< 10 words	"Your answer is too short. Please expand more."
 
-Simple numeric score based on answer length:
+⭐ score
+Simple numeric score calculated from answer length:
 
-| Condition  | Score |
-| ---------- | ----- |
-| ≥ 20 words | 9     |
-| ≥ 10 words | 7     |
-| < 10 words | 4     |
+Condition	Score
+≥ 20 words	9
+≥ 10 words	7
+< 10 words	4
 
----
+🧪 Full Example Flow
+➤ Step 1 — Start Interview
+Request:
 
-# 🧪 Full Example Flow
-
-## ➤ Step 1 — Start Interview
-
-**Request:**
-
-```
+angelscript
+Copy code
 POST /api/interview/start
-```
+Response:
 
-**Response:**
+json
+Copy code
+{
+  "question": "Explain the concept of RESTful APIs."
+}
+➤ Step 2 — Submit Answer
+Request:
 
-```json
+json
+Copy code
 {
   "questionNumber": 1,
-  "question": "Tell me about yourself.",
-  "feedback": null,
-  "score": null
+  "userAnswer": "REST APIs use HTTP methods and are stateless."
 }
-```
+Response:
 
----
-
-## ➤ Step 2 — Submit Answer
-
-**Request:**
-
-```json
-{
-  "questionNumber": 1,
-  "userAnswer": "I am a motivated developer who enjoys learning."
-}
-```
-
-**Response:**
-
-```json
+json
+Copy code
 {
   "questionNumber": 2,
   "question": "Why should we hire you?",
   "feedback": "Good answer, but try to add more details.",
   "score": 7
 }
-```
+✔ Acceptance Criteria Check
+✅ File exists → /docs/interview-api.md
 
----
+✅ Clear and structured sections
 
-# ✔ Acceptance Criteria Check
+✅ Accurate request and response formats
 
-- [x] File exists → `/docs/interview-api.md`
-- [x] Clear header sections
-- [x] Exact backend response examples
-- [x] Usable by frontend without confusion
-- [x] Matches actual backend logic
+✅ Fully matches backend implementation
+
+✅ Supports AI-based and static interview logic
+
+✅ Ready for frontend integration and graduation discussion
