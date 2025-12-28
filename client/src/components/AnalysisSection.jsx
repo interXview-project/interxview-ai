@@ -1,37 +1,98 @@
+import {CheckCircleIcon, DocumentTextIcon,CpuChipIcon,LanguageIcon, ClipboardDocumentCheckIcon,
+} from "@heroicons/react/24/solid";
+
 // this data will come from AI API response
 const DATA = [
-  { title: "Structure & Formatting", score: 78 },
-  { title: "Content Quality", score: 66 },
-  { title: "Skills Match", score: 84 },
-  { title: "ATS Compatibility", score: 71 },
-  { title: "Language & Tone", score: 90 },
+  {
+    title: "Structure & Formatting",
+    score: 78,
+    icon: DocumentTextIcon,
+  },
+  {
+    title: "Content Quality",
+    score: 66,
+    icon: ClipboardDocumentCheckIcon,
+  },
+  {
+    title: "Skills Match",
+    score: 84,
+    icon: CpuChipIcon,
+  },
+  {
+    title: "ATS Compatibility",
+    score: 71,
+    icon: CheckCircleIcon,
+  },
+  {
+    title: "Language & Tone",
+    score: 90,
+    icon: LanguageIcon,
+  },
 ];
 
+// score color logic
+const getBarColor = (score) => {
+  if (score >= 85) return "bg-green-500";
+  if (score >= 70) return "bg-blue-500";
+  return "bg-yellow-500";
+};
+
 export default function AnalysisSection() {
+  const averageScore = Math.round(
+    DATA.reduce((acc, item) => acc + item.score, 0) / DATA.length
+  );
+
   return (
-    <div className="mb-14">
-      <h2 className="text-white text-2xl font-bold mb-6 text-center">
+    <div className="mb-16">
+      {/* Title */}
+      <h2 className="text-white text-2xl font-bold mb-2 text-center">
         CV Analysis Results
       </h2>
 
-      {DATA.map((item, index) => (
-        <div
-          key={index}
-          className="bg-white/5 border border-white/10 rounded-xl p-5 mb-4"
-        >
-          <div className="flex justify-between mb-2">
-            <span className="text-white">{item.title}</span>
-            <span className="text-[#4F7CFF]">{item.score}%</span>
-          </div>
+      {/* Average Score */}
+      <p className="text-center text-sm text-white/70 mb-6">
+        Overall CV Score:{" "}
+        <span className="text-[#4F7CFF] font-semibold">
+          {averageScore}%
+        </span>
+      </p>
 
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#4F7CFF]"
-              style={{ width: `${item.score}%` }}
-            />
-          </div>
+      {/* Main Container */}
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {DATA.map((item, index) => {
+            const Icon = item.icon;
+
+            return (
+              <div key={index}>
+                {/* Header */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-4 h-4 text-[#4F7CFF]" />
+                    <span className="text-white text-sm font-medium">
+                      {item.title}
+                    </span>
+                  </div>
+
+                  <span className="text-sm font-semibold text-white">
+                    {item.score}%
+                  </span>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full ${getBarColor(
+                      item.score
+                    )} transition-all duration-700`}
+                    style={{ width: `${item.score}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
