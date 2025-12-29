@@ -1,7 +1,7 @@
 export default function FinalCTA() {
   return (
     <div className="
-      bg-[#4F7CFF]
+      bg-[#0ea5e9]/80
       rounded-2xl
       px-8
       py-8
@@ -15,8 +15,8 @@ export default function FinalCTA() {
         Ready to Boost Your Career?
       </h2>
 
-      <button className="bg-white px-7 py-3.5 rounded-xl">
-        <span className="text-[#4F7CFF] font-semibold">
+      <button className="bg-white px-7 py-3.5 rounded-xl hover:bg-slate-200 transition-colors">
+        <span className="text-[#0ea5e9] font-semibold">
           Download Improved CV
         </span>
       </button>

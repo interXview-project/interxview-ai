@@ -7,7 +7,6 @@ export default function Navbar({ routes = [] }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  //  REAL AUTH CHECK
   const isLoggedIn = !!localStorage.getItem("token");
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -19,7 +18,7 @@ export default function Navbar({ routes = [] }) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#0a1628] to-[#0a1628]/98 backdrop-blur-xl border-b border-white/5">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#0a1628] to-[#0f2847]/98 backdrop-blur-xl border-b border-slate-700/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* LOGO */}
@@ -38,7 +37,7 @@ export default function Navbar({ routes = [] }) {
           </Link>
 
           {/* DESKTOP NAV LINKS */}
-          <div className="hidden md:flex items-center gap-1 bg-[#0f2847]/50 rounded-full px-2 py-2 border border-white/5">
+          <div className="hidden md:flex items-center gap-1 bg-[#0f2847]/50 rounded-full px-2 py-2 border border-slate-700/20">
             {routes
               .filter((route) => !route.protected || isLoggedIn)
               .map(({ name, path }) => (
@@ -46,23 +45,34 @@ export default function Navbar({ routes = [] }) {
                   key={name}
                   to={path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={({ isActive }) => `group block ${isActive ? 'text-white bg-[#0ea5e9]/10 border-[#0ea5e9]/20' : 'text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 hover:border-[#0ea5e9]/20'} transition-all duration-200 px-4 py-3 rounded-xl border border-transparent cursor-pointer`}
+                  className={({ isActive }) =>
+                    `group block ${
+                      isActive
+                        ? "text-white bg-[#0ea5e9]/10 border-[#0ea5e9]/20"
+                        : "text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 hover:border-[#0ea5e9]/20"
+                    } transition-all duration-200 px-4 py-3 rounded-xl border border-transparent cursor-pointer`
+                  }
                 >
                   {({ isActive }) => (
                     <span className="relative inline-block">
                       <span className="relative z-10">{name}</span>
-                      <span className={`absolute left-0 -bottom-1 h-[2px] bg-[#4F7CFF] rounded ${isActive ? 'w-full' : 'w-0 group-hover:w-full'} transition-all duration-300`} />
+                      <span
+                        className={`absolute left-0 -bottom-1 h-[2px] bg-[#0ea5e9] rounded ${
+                          isActive ? "w-full" : "w-0 group-hover:w-full"
+                        } transition-all duration-300`}
+                      />
                     </span>
                   )}
                 </NavLink>
               ))}
           </div>
 
+          {/* PROFILE / LOGIN BUTTON */}
           <div className="hidden md:block">
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="relative flex items-center gap-3 pl-3 pr-4 py-2.5 bg-gradient-to-r from-[#0f2847] to-[#1a3a5c] hover:from-[#1a3a5c] hover:to-[#0f2847] border border-[#0ea5e9]/30 rounded-full transition-all duration-300 cursor-pointer group overflow-hidden"
+                className="relative flex items-center gap-3 pl-3 pr-4 py-2.5 bg-gradient-to-r from-[#0f2847] to-[#1a3a5c] border border-[#0ea5e9]/30 rounded-full transition-all duration-300 cursor-pointer group overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0ea5e9]/0 via-[#0ea5e9]/10 to-[#0ea5e9]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="flex items-center gap-2 relative z-10">
@@ -92,7 +102,7 @@ export default function Navbar({ routes = [] }) {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="relative p-2.5 rounded-xl bg-[#0f2847]/50 border border-white/5 text-slate-400 hover:text-[#0ea5e9] hover:border-[#0ea5e9]/30 transition-all duration-300 cursor-pointer"
+              className="relative p-2.5 rounded-xl bg-[#0f2847]/50 border border-slate-700/20 text-slate-400 hover:text-[#0ea5e9] hover:border-[#0ea5e9]/30 transition-all duration-300 cursor-pointer"
             >
               {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -102,7 +112,7 @@ export default function Navbar({ routes = [] }) {
         {/* MOBILE MENU */}
         {isMenuOpen && (
           <div className="md:hidden pb-6 pt-4 space-y-3 animate-in fade-in slide-in-from-top-5 duration-300">
-            <div className="bg-[#0f2847]/30 rounded-2xl p-4 border border-white/5 backdrop-blur-xl space-y-2">
+            <div className="bg-[#0f2847]/30 rounded-2xl p-4 border border-slate-700/20 backdrop-blur-xl space-y-2">
               {routes
                 .filter((route) => !route.protected || isLoggedIn)
                 .map(({ name, path }) => (
@@ -110,12 +120,22 @@ export default function Navbar({ routes = [] }) {
                     key={name}
                     to={path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={({ isActive }) => `group block ${isActive ? 'text-white bg-[#0ea5e9]/10' : 'text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10'} transition-all duration-200 px-4 py-3 rounded-xl`}
+                    className={({ isActive }) =>
+                      `group block ${
+                        isActive
+                          ? "text-white bg-[#0ea5e9]/10"
+                          : "text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10"
+                      } transition-all duration-200 px-4 py-3 rounded-xl`
+                    }
                   >
                     {({ isActive }) => (
                       <span className="relative inline-block">
                         <span className="relative z-10">{name}</span>
-                        <span className={`absolute left-0 -bottom-1 h-[2px] bg-[#4F7CFF] rounded ${isActive ? 'w-full' : 'w-0 group-hover:w-full'} transition-all duration-300`} />
+                        <span
+                          className={`absolute left-0 -bottom-1 h-[2px] bg-[#0ea5e9] rounded ${
+                            isActive ? "w-full" : "w-0 group-hover:w-full"
+                          } transition-all duration-300`}
+                        />
                       </span>
                     )}
                   </NavLink>

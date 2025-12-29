@@ -39,7 +39,6 @@ export default function Interview() {
       const firstQuestion = res.data.question;
 
       setMessages([{ sender: "AI", message: firstQuestion, type: "question" }]);
-
       setCurrentQuestion(firstQuestion);
       setQuestionNumber(1);
       setPreviousQuestions([firstQuestion]);
@@ -141,14 +140,14 @@ export default function Interview() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col w-full bg-[#0A0E27] text-white">
+    <div className="min-h-screen flex flex-col w-full bg-[#0a1628] text-white">
       <main className="flex-1 px-4 lg:px-6 py-4 lg:py-6 mt-20 pb-8">
         {/* HEADER */}
         <div className="mb-3 text-center">
-          <h1 className="text-xl sm:text-2xl font-semibold mb-1">
+          <h1 className="text-xl sm:text-2xl font-semibold mb-1 text-white">
             AI Interview Simulation
           </h1>
-          <p className="text-gray-400 text-sm">
+          <p className="text-slate-400 text-sm">
             Practice real interview questions powered by AI.
           </p>
 
@@ -156,7 +155,7 @@ export default function Interview() {
             <button
               onClick={startInterview}
               disabled={loading}
-              className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700"
+              className="px-4 py-2 rounded bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
             >
               Start Interview
             </button>
@@ -164,7 +163,7 @@ export default function Interview() {
             {currentQuestion && (
               <button
                 onClick={forceEndInterview}
-                className="px-4 py-2 rounded bg-red-600 hover:bg-red-700"
+                className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white"
               >
                 End Interview
               </button>
@@ -174,7 +173,7 @@ export default function Interview() {
 
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-3 mb-4">
-          <div className="flex flex-col bg-white/5 rounded-2xl border border-white/10 p-3 h-[520px] shadow-xl">
+          <div className="flex flex-col bg-[#0f2847]/50 rounded-2xl border border-slate-700/20 p-3 h-[520px] shadow-xl">
             <ChatContainer messages={messages} loading={loading} />
             <InputArea
               onSend={handleSend}
@@ -189,18 +188,18 @@ export default function Interview() {
         <ProgressSteps currentStep={questionNumber} total={TOTAL_QUESTIONS} />
 
         {/* =====================
-          LOADING SKELETON
-      ====================== */}
+           LOADING SKELETON
+        ====================== */}
         {feedbackLoading && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-            <div className="bg-[#0F1540] p-6 rounded-2xl w-[420px] border border-white/20">
+            <div className="bg-[#1a3a5c] p-6 rounded-2xl w-[420px] border border-slate-700/20">
               <div className="flex gap-3 items-center">
-                <div className="w-9 h-9 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                <div className="w-9 h-9 border-4 border-[#0ea5e9] border-t-transparent rounded-full animate-spin" />
                 <div>
                   <p className="text-white font-semibold text-sm">
                     Analyzing Interview...
                   </p>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-slate-400 text-xs">
                     Generating HR-grade feedback
                   </p>
                 </div>
@@ -217,26 +216,26 @@ export default function Interview() {
 
         {/* =====================
            FEEDBACK MODAL
-      ====================== */}
+        ====================== */}
         {showFeedbackModal && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-            <div className="bg-[#11183A] border border-white/20 rounded-2xl p-6 max-w-3xl w-[92%]">
-              <h2 className="text-2xl font-bold mb-2 text-green-400">
+            <div className="bg-[#1a3a5c] border border-slate-700/20 rounded-2xl p-6 max-w-3xl w-[92%]">
+              <h2 className="text-2xl font-bold mb-2 text-[#0ea5e9]">
                 Final Interview Evaluation
               </h2>
 
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-lg font-semibold">Final Score</h3>
+                <h3 className="text-lg font-semibold text-white">Final Score</h3>
                 <span className="text-3xl font-bold text-yellow-400">
                   {finalFeedback?.score || 60} / 100
                 </span>
               </div>
 
-              <div className="bg-white/10 p-4 rounded-xl border border-white/20 mb-3">
-                <h3 className="text-lg font-semibold text-blue-400 mb-1">
+              <div className="bg-[#0f2847]/50 p-4 rounded-xl border border-slate-700/20 mb-3">
+                <h3 className="text-lg font-semibold text-[#0ea5e9] mb-1">
                   ATS Summary
                 </h3>
-                <p className="text-gray-300">{finalFeedback?.atsSummary}</p>
+                <p className="text-slate-300">{finalFeedback?.atsSummary}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -244,7 +243,7 @@ export default function Interview() {
                   <h3 className="text-lg font-semibold text-green-400 mb-1">
                     Strengths
                   </h3>
-                  <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                  <ul className="list-disc pl-6 text-slate-300 space-y-1">
                     {(finalFeedback?.strengths || []).map((s, i) => (
                       <li key={i}>{s}</li>
                     ))}
@@ -255,7 +254,7 @@ export default function Interview() {
                   <h3 className="text-lg font-semibold text-red-400 mb-1">
                     Weaknesses
                   </h3>
-                  <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                  <ul className="list-disc pl-6 text-slate-300 space-y-1">
                     {(finalFeedback?.weaknesses || []).map((w, i) => (
                       <li key={i}>{w}</li>
                     ))}
@@ -263,11 +262,11 @@ export default function Interview() {
                 </div>
               </div>
 
-              <div className="bg-white/10 p-4 rounded-xl border border-white/20 mt-3">
+              <div className="bg-[#0f2847]/50 p-4 rounded-xl border border-slate-700/20 mt-3">
                 <h3 className="text-lg font-semibold text-purple-400 mb-1">
                   HR Detailed Feedback
                 </h3>
-                <p className="text-gray-300">
+                <p className="text-slate-300">
                   {typedFeedback}
                   <span className="animate-pulse">|</span>
                 </p>
@@ -276,7 +275,7 @@ export default function Interview() {
               <div className="text-right mt-3">
                 <button
                   onClick={() => setShowFeedbackModal(false)}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
+                  className="px-4 py-2 bg-[#0ea5e9] hover:bg-[#0284c7] rounded text-white"
                 >
                   Close
                 </button>

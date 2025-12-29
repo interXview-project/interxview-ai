@@ -27,12 +27,12 @@ export default function UploadSection({ loading, onUpload, statusMessage }) {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 flex flex-col items-center mb-14">
+    <div className="w-full max-w-md mx-auto rounded-2xl border border-slate-700 bg-[#0f2847]/70 p-6 sm:p-8 flex flex-col items-center mb-14">
       {!loading ? (
         <>
           <p className="text-white text-lg mb-2">Upload your CV (PDF)</p>
 
-          <p className="text-gray-400 mb-6">Max size 10MB</p>
+          <p className="text-slate-400 mb-6">Max size 10MB</p>
 
           <input
             type="file"
@@ -45,13 +45,13 @@ export default function UploadSection({ loading, onUpload, statusMessage }) {
           <button
             onClick={handleButtonClick}
             className="
-              bg-[#4F7CFF]
+              bg-[#0ea5e9]
               px-8 py-4
               rounded-xl
               flex items-center gap-2
               transition-all duration-300
-              shadow-none
-              hover:shadow-[0_0_25px_rgba(79,124,255,0.7)]
+              shadow-lg
+              hover:shadow-[0_0_25px_rgba(14,165,233,0.7)]
             "
           >
             <SparklesIcon className="w-5 h-5 text-white" />
@@ -60,10 +60,10 @@ export default function UploadSection({ loading, onUpload, statusMessage }) {
         </>
       ) : (
         <>
-          <div className="w-12 h-12 border-4 border-[#4F7CFF] border-t-transparent rounded-full animate-spin" />
+          <div className="w-12 h-12 border-4 border-[#0ea5e9] border-t-transparent rounded-full animate-spin" />
           <p className="text-white mt-4 text-lg">{statusMessage}</p>
 
-          <p className="text-gray-400 mt-2 animate-pulse">Please wait...</p>
+          <p className="text-slate-400 mt-2 animate-pulse">Please wait...</p>
         </>
       )}
     </div>

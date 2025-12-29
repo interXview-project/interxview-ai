@@ -15,7 +15,8 @@ export default function ChatContainer({ messages, loading }) {
   return (
     <div
       ref={chatRef}
-      className="flex-1 overflow-y-auto overflow-x-hidden pr-2 space-y-4 break-words whitespace-pre-wrap scrollbar-thin scrollbar-thumb-[#3A7BFF]/40 scrollbar-track-[#0A0E27]/50"
+      className="flex-1 overflow-y-auto overflow-x-hidden pr-2 space-y-4 break-words whitespace-pre-wrap
+                 scrollbar-thin scrollbar-thumb-[#0ea5e9]/40 scrollbar-track-[#0a1628]/50"
     >
       {messages.map((msg, index) => (
         <motion.div
@@ -33,9 +34,9 @@ export default function ChatContainer({ messages, loading }) {
       ))}
 
       {loading && (
-        <div className="self-start bg-gray-700 p-3 rounded-lg max-w-xs flex items-center">
+        <div className="self-start bg-slate-800 p-3 rounded-lg max-w-xs flex items-center">
           <TypingDots className="mr-2" />
-          <span className="text-gray-200 text-sm animate-pulse">
+          <span className="text-slate-300 text-sm animate-pulse">
             AI is typing...
           </span>
         </div>

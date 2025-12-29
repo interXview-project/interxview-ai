@@ -2,5 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  background-color: #EFECE3;
+  background-color: #efece3;
+}
+@keyframes lineMove {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-lineSlow {
+  animation: lineMove 14s linear infinite;
+}
+
+.animate-lineMedium {
+  animation: lineMove 10s linear infinite;
+}
+
+.animate-lineFast {
+  animation: lineMove 7s linear infinite;
 }

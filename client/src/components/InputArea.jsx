@@ -15,7 +15,7 @@ export default function InputArea({ onSend, disabled }) {
 
     // Prevent sending if Arabic exists
     if (arabicRegex.test(text)) {
-      setError("Please answer in English only ");
+      setError("Please answer in English only");
       return;
     }
 
@@ -29,7 +29,7 @@ export default function InputArea({ onSend, disabled }) {
 
     // Live validation: show message if Arabic typed
     if (arabicRegex.test(value)) {
-      setError("Please answer in English only ");
+      setError("Please answer in English only");
     } else {
       setError("");
     }
@@ -46,7 +46,7 @@ export default function InputArea({ onSend, disabled }) {
           onChange={handleChange}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="Write your answer..."
-          className="flex-1 bg-white/5 border border-white/10 text-white placeholder-gray-400 px-4 py-3 rounded-2xl outline-none text-sm backdrop-blur-sm"
+          className="flex-1 bg-[#1a3a5c] border border-slate-700 text-slate-300 placeholder-slate-400 px-4 py-3 rounded-2xl outline-none text-sm backdrop-blur-sm"
         />
 
         <motion.button
@@ -55,8 +55,8 @@ export default function InputArea({ onSend, disabled }) {
           onClick={handleSend}
           className={`px-4 py-3 rounded-2xl flex items-center gap-2 text-sm shadow-lg transition-all ${
             disabled
-              ? "bg-gray-600/40 cursor-not-allowed"
-              : "bg-[#3A7BFF] hover:bg-[#2E6FE0] text-white"
+              ? "bg-slate-700/40 cursor-not-allowed text-slate-400"
+              : "bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
           }`}
         >
           <Send size={16} />
