@@ -37,25 +37,27 @@ export default function MockTest() {
   };
 
   return (
-    <>
-    <div style={{ padding: "20px", color: "white", backgroundColor: "#0a1628", minHeight: "100vh" }}>
-      <h1>Mock Interview Test</h1>
-      {!question && <button onClick={handleStart}>Start Interview</button>}
-      {question && (
-        <div style={{ marginTop: "10px" }}>
-          <h3>Q{questionNumber}: {question}</h3>
-          <input
-            type="text"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            placeholder="Type your answer here..."
-            style={{ marginRight: "10px", color: "black" }} 
-          />
-          <button onClick={handleAnswer}>Submit Answer</button>
-        </div>
-      )}
-    </div>
-    <Footer/>
-    </>
+    <main className="flex flex-col min-h-screen bg-[#0a1628] text-white">
+      <div className="flex-1 px-6 pt-12">
+        <h1 className="text-2xl font-semibold mb-4">Mock Interview Test</h1>
+        {!question && <button className="px-4 py-2 bg-[#3A7BFF] rounded-md" onClick={handleStart}>Start Interview</button>}
+        {question && (
+          <div className="mt-4">
+            <h3 className="font-medium">Q{questionNumber}: {question}</h3>
+            <div className="mt-3 flex items-center gap-3">
+              <input
+                type="text"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Type your answer here..."
+                className="px-3 py-2 rounded-md text-black flex-1"
+              />
+              <button className="px-4 py-2 bg-[#3A7BFF] rounded-md" onClick={handleAnswer}>Submit Answer</button>
+            </div>
+          </div>
+        )}
+      </div>
+      <Footer />
+    </main>
   );
 }

@@ -1,99 +1,28 @@
-import { CheckCircleIcon, DocumentTextIcon, CpuChipIcon, LanguageIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
+export default function AnalysisSection({ analysis }) {
+  if (!analysis) return null;
 
-const getBarColor = (score) => {
-  if (score >= 85) return "bg-green-500";
-  if (score >= 70) return "bg-blue-500";
-  return "bg-yellow-500";
-};
+  const getScoreColor = () => {
+    if (analysis.score >= 80)
+      return "text-green-400 border-green-500 shadow-[0_0_25px_rgba(16,185,129,.4)]";
+    if (analysis.score >= 50)
+      return "text-yellow-400 border-yellow-400 shadow-[0_0_25px_rgba(234,179,8,.4)]";
+    return "text-red-400 border-red-400 shadow-[0_0_25px_rgba(239,68,68,.4)]";
+  };
 
-export default function AnalysisSection({ file, data }) {
+  const getBarColor = (i) => {
+    return i % 2 === 0 ? "bg-[#4F7CFF]" : "bg-[#22c55e]";
+  };
 
-  const analysisData = data || [
-    {
-      title: "Structure & Formatting",
-      score: 78,
-      icon: DocumentTextIcon,
-    },
-    {
-      title: "Content Quality",
-      score: 66,
-      icon: ClipboardDocumentCheckIcon,
-    },
-    {
-      title: "Skills Match",
-      score: 84,
-      icon: CpuChipIcon,
-    },
-    {
-      title: "ATS Compatibility",
-      score: 71,
-      icon: CheckCircleIcon,
-    },
-    {
-      title: "Language & Tone",
-      score: 90,
-      icon: LanguageIcon,
-    },
-  ];
-
-  const averageScore = Math.round(
-    analysisData.reduce((acc, item) => acc + item.score, 0) / analysisData.length
-  );
+  const stars = Math.round((analysis.score / 100) * 5);
 
   return (
-    <div className="mb-16">
-      {/* Title */}
-      <h2 className="text-white text-2xl font-bold mb-2 text-center">
-        CV Analysis Results
-      </h2>
-
-      {/* Uploaded File Name */}
-      {file && (
-        <p className="text-center text-sm text-white/70 mb-2">
-          Uploaded File: <span className="text-[#4F7CFF] font-semibold">{file.name}</span>
-        </p>
-      )}
-
-      {/* Average Score */}
-      <p className="text-center text-sm text-white/70 mb-6">
-        Overall CV Score:{" "}
-        <span className="text-[#4F7CFF] font-semibold">
-          {averageScore}%
-        </span>
-      </p>
-
-      {/* Main Container */}
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {analysisData.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <div key={index}>
-                {/* Header */}
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-[#4F7CFF]" />
-                    <span className="text-white text-sm font-medium">
-                      {item.title}
-                    </span>
-                  </div>
-
-                  <span className="text-sm font-semibold text-white">
-                    {item.score}%
-                  </span>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full ${getBarColor(item.score)} transition-all duration-700`}
-                    style={{ width: `${item.score}%` }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+    <div className="max-w-4xl mx-auto text-white">
+      {/* SCORE CARD */}
+      <div className="flex flex-col items-center gap-4 mb-12">
+        <div
+          className={`w-48 h-48 rounded-full border-4 flex items-center justify-center text-5xl font-bold ${getScoreColor()}`}
+        >
+          {analysis.score}%
         </div>
         <p className="text-gray-300 text-lg">Overall ATS Evaluation Score</p>
 
@@ -176,101 +105,3 @@ export default function AnalysisSection({ file, data }) {
     </div>
   );
 }
-// import {CheckCircleIcon, DocumentTextIcon,CpuChipIcon,LanguageIcon, ClipboardDocumentCheckIcon,
-// } from "@heroicons/react/24/solid";
-
-// // this data will come from AI API response
-// const DATA = [
-//   {
-//     title: "Structure & Formatting",
-//     score: 78,
-//     icon: DocumentTextIcon,
-//   },
-//   {
-//     title: "Content Quality",
-//     score: 66,
-//     icon: ClipboardDocumentCheckIcon,
-//   },
-//   {
-//     title: "Skills Match",
-//     score: 84,
-//     icon: CpuChipIcon,
-//   },
-//   {
-//     title: "ATS Compatibility",
-//     score: 71,
-//     icon: CheckCircleIcon,
-//   },
-//   {
-//     title: "Language & Tone",
-//     score: 90,
-//     icon: LanguageIcon,
-//   },
-// ];
-
-// // score color logic
-// const getBarColor = (score) => {
-//   if (score >= 85) return "bg-green-500";
-//   if (score >= 70) return "bg-blue-500";
-//   return "bg-yellow-500";
-// };
-
-// export default function AnalysisSection() {
-//   const averageScore = Math.round(
-//     DATA.reduce((acc, item) => acc + item.score, 0) / DATA.length
-//   );
-
-//   return (
-//     <div className="mb-16">
-//       {/* Title */}
-//       <h2 className="text-white text-2xl font-bold mb-2 text-center">
-//         CV Analysis Results
-//       </h2>
-
-//       {/* Average Score */}
-//       <p className="text-center text-sm text-white/70 mb-6">
-//         Overall CV Score:{" "}
-//         <span className="text-[#4F7CFF] font-semibold">
-//           {averageScore}%
-//         </span>
-//       </p>
-
-//       {/* Main Container */}
-//       <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//           {DATA.map((item, index) => {
-//             const Icon = item.icon;
-
-//             return (
-//               <div key={index}>
-//                 {/* Header */}
-//                 <div className="flex items-center justify-between mb-2">
-//                   <div className="flex items-center gap-2">
-//                     <Icon className="w-4 h-4 text-[#4F7CFF]" />
-//                     <span className="text-white text-sm font-medium">
-//                       {item.title}
-//                     </span>
-//                   </div>
-
-//                   <span className="text-sm font-semibold text-white">
-//                     {item.score}%
-//                   </span>
-//                 </div>
-
-//                 {/* Progress Bar */}
-//                 <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-//                   <div
-//                     className={`h-full ${getBarColor(
-//                       item.score
-//                     )} transition-all duration-700`}
-//                     style={{ width: `${item.score}%` }}
-//                   />
-//                 </div>
-//               </div>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

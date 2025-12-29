@@ -115,6 +115,7 @@
 - **Buttons:** Standardized style for Submit, Save, Upload, Next
 - **Forms:** Styled consistently (inputs, textareas, file uploads)
 - **Feedback UI:** Toasts or bubbles for success/error messages
+- **Footer:** Consistent across all pages — uses a centered `max-w-7xl mx-auto px-6` inner container so width, padding, and vertical spacing match the Home page. Footer also uses `mt-auto` (when parent is a flex column) to ensure it sits at the bottom of the viewport on short pages.
 
 ---
 

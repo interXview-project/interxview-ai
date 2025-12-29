@@ -141,148 +141,152 @@ export default function Interview() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen w-full bg-[#0A0E27] text-white px-4 py-4 lg:px-6 lg:py-6 mt-6">
-      {/* HEADER */}
-      <div className="mb-3 text-center">
-        <h1 className="text-xl sm:text-2xl font-semibold mb-1">
-          AI Interview Simulation
-        </h1>
-        <p className="text-gray-400 text-sm">
-          Practice real interview questions powered by AI.
-        </p>
+    <div className="min-h-screen flex flex-col w-full bg-[#0A0E27] text-white">
+      <main className="flex-1 px-4 lg:px-6 py-4 lg:py-6 mt-20 pb-8">
+        {/* HEADER */}
+        <div className="mb-3 text-center">
+          <h1 className="text-xl sm:text-2xl font-semibold mb-1">
+            AI Interview Simulation
+          </h1>
+          <p className="text-gray-400 text-sm">
+            Practice real interview questions powered by AI.
+          </p>
 
-        <div className="flex justify-center gap-3 mt-2">
-          <button
-            onClick={startInterview}
-            disabled={loading}
-            className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700"
-          >
-            Start Interview
-          </button>
-
-          {currentQuestion && (
+          <div className="flex justify-center gap-3 mt-2">
             <button
-              onClick={forceEndInterview}
-              className="px-4 py-2 rounded bg-red-600 hover:bg-red-700"
+              onClick={startInterview}
+              disabled={loading}
+              className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700"
             >
-              End Interview
+              Start Interview
             </button>
-          )}
-        </div>
-      </div>
 
-      {/* MAIN GRID */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-3 mb-4">
-        <div className="flex flex-col bg-white/5 rounded-2xl border border-white/10 p-3 h-[520px] shadow-xl">
-          <ChatContainer messages={messages} loading={loading} />
-          <InputArea
-            onSend={handleSend}
-            disabled={loading || !currentQuestion}
-          />
+            {currentQuestion && (
+              <button
+                onClick={forceEndInterview}
+                className="px-4 py-2 rounded bg-red-600 hover:bg-red-700"
+              >
+                End Interview
+              </button>
+            )}
+          </div>
         </div>
 
-        <Sidebar jobRole={jobRole} setJobRole={setJobRole} />
-      </div>
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-3 mb-4">
+          <div className="flex flex-col bg-white/5 rounded-2xl border border-white/10 p-3 h-[520px] shadow-xl">
+            <ChatContainer messages={messages} loading={loading} />
+            <InputArea
+              onSend={handleSend}
+              disabled={loading || !currentQuestion}
+            />
+          </div>
 
-      {/* PROGRESS BAR */}
-      <ProgressSteps currentStep={questionNumber} total={TOTAL_QUESTIONS} />
+          <Sidebar jobRole={jobRole} setJobRole={setJobRole} />
+        </div>
 
-      {/* =====================
+        {/* PROGRESS BAR */}
+        <ProgressSteps currentStep={questionNumber} total={TOTAL_QUESTIONS} />
+
+        {/* =====================
           LOADING SKELETON
       ====================== */}
-      {feedbackLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-          <div className="bg-[#0F1540] p-6 rounded-2xl w-[420px] border border-white/20">
-            <div className="flex gap-3 items-center">
-              <div className="w-9 h-9 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-              <div>
-                <p className="text-white font-semibold text-sm">
-                  Analyzing Interview...
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Generating HR-grade feedback
-                </p>
+        {feedbackLoading && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+            <div className="bg-[#0F1540] p-6 rounded-2xl w-[420px] border border-white/20">
+              <div className="flex gap-3 items-center">
+                <div className="w-9 h-9 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                <div>
+                  <p className="text-white font-semibold text-sm">
+                    Analyzing Interview...
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    Generating HR-grade feedback
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                <div className="h-3 bg-white/20 rounded animate-pulse" />
+                <div className="h-3 bg-white/20 rounded animate-pulse" />
+                <div className="h-3 bg-white/20 rounded animate-pulse w-3/4" />
               </div>
             </div>
-
-            <div className="mt-4 space-y-2">
-              <div className="h-3 bg-white/20 rounded animate-pulse" />
-              <div className="h-3 bg-white/20 rounded animate-pulse" />
-              <div className="h-3 bg-white/20 rounded animate-pulse w-3/4" />
-            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* =====================
+        {/* =====================
            FEEDBACK MODAL
       ====================== */}
-      {showFeedbackModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-          <div className="bg-[#11183A] border border-white/20 rounded-2xl p-6 max-w-3xl w-[92%]">
-            <h2 className="text-2xl font-bold mb-2 text-green-400">
-              Final Interview Evaluation
-            </h2>
+        {showFeedbackModal && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+            <div className="bg-[#11183A] border border-white/20 rounded-2xl p-6 max-w-3xl w-[92%]">
+              <h2 className="text-2xl font-bold mb-2 text-green-400">
+                Final Interview Evaluation
+              </h2>
 
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-semibold">Final Score</h3>
-              <span className="text-3xl font-bold text-yellow-400">
-                {finalFeedback?.score || 60} / 100
-              </span>
-            </div>
-
-            <div className="bg-white/10 p-4 rounded-xl border border-white/20 mb-3">
-              <h3 className="text-lg font-semibold text-blue-400 mb-1">
-                ATS Summary
-              </h3>
-              <p className="text-gray-300">{finalFeedback?.atsSummary}</p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <h3 className="text-lg font-semibold text-green-400 mb-1">
-                  Strengths
-                </h3>
-                <ul className="list-disc pl-6 text-gray-300 space-y-1">
-                  {(finalFeedback?.strengths || []).map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-semibold">Final Score</h3>
+                <span className="text-3xl font-bold text-yellow-400">
+                  {finalFeedback?.score || 60} / 100
+                </span>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-red-400 mb-1">
-                  Weaknesses
+              <div className="bg-white/10 p-4 rounded-xl border border-white/20 mb-3">
+                <h3 className="text-lg font-semibold text-blue-400 mb-1">
+                  ATS Summary
                 </h3>
-                <ul className="list-disc pl-6 text-gray-300 space-y-1">
-                  {(finalFeedback?.weaknesses || []).map((w, i) => (
-                    <li key={i}>{w}</li>
-                  ))}
-                </ul>
+                <p className="text-gray-300">{finalFeedback?.atsSummary}</p>
               </div>
-            </div>
 
-            <div className="bg-white/10 p-4 rounded-xl border border-white/20 mt-3">
-              <h3 className="text-lg font-semibold text-purple-400 mb-1">
-                HR Detailed Feedback
-              </h3>
-              <p className="text-gray-300">
-                {typedFeedback}
-                <span className="animate-pulse">|</span>
-              </p>
-            </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <h3 className="text-lg font-semibold text-green-400 mb-1">
+                    Strengths
+                  </h3>
+                  <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                    {(finalFeedback?.strengths || []).map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
 
-            <div className="text-right mt-3">
-              <button
-                onClick={() => setShowFeedbackModal(false)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
-              >
-                Close
-              </button>
+                <div>
+                  <h3 className="text-lg font-semibold text-red-400 mb-1">
+                    Weaknesses
+                  </h3>
+                  <ul className="list-disc pl-6 text-gray-300 space-y-1">
+                    {(finalFeedback?.weaknesses || []).map((w, i) => (
+                      <li key={i}>{w}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-white/10 p-4 rounded-xl border border-white/20 mt-3">
+                <h3 className="text-lg font-semibold text-purple-400 mb-1">
+                  HR Detailed Feedback
+                </h3>
+                <p className="text-gray-300">
+                  {typedFeedback}
+                  <span className="animate-pulse">|</span>
+                </p>
+              </div>
+
+              <div className="text-right mt-3">
+                <button
+                  onClick={() => setShowFeedbackModal(false)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </main>
+        )}
+      </main>
+
+      <Footer />
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/LoginScreen.jsx";
 import SignUp from "./pages/SignupScreen.jsx";
@@ -25,6 +26,7 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Navbar routes={routes} />
+        <ScrollToTop />
 
         <main className="pt-20 min-h-screen bg-[#0a1628]">
           <Routes>

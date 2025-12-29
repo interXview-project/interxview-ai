@@ -31,29 +31,35 @@ export default function HowItWorks() {
         {/* Cards */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <HowItWorksCard
-            icon={<UserPlusIcon className="w-7 h-7" />}
+            icon={<UserPlusIcon className="w-7 h-7 text-[#1E90FF]" />}
             title="Create Your Profile"
             description="Sign up and tell us about your career goals, experience, and target roles."
+            className="bg-[#F5F5F5] shadow-lg rounded-2xl p-6 text-[#2F2F2F]"
           />
 
           <HowItWorksCard
-            icon={<Cog6ToothIcon className="w-7 h-7" />}
+            icon={<Cog6ToothIcon className="w-7 h-7 text-[#1E90FF]" />}
             title="Customize Your Path"
             description="AI generates a personalized learning path based on your needs and skill gaps."
+            className="bg-[#F5F5F5] shadow-lg rounded-2xl p-6 text-[#2F2F2F]"
           />
 
           <HowItWorksCard
-            icon={<RocketLaunchIcon className="w-7 h-7" />}
+            icon={<RocketLaunchIcon className="w-7 h-7 text-[#1E90FF]" />}
             title="Practice & Improve"
             description="Engage in mock interviews, refine your CV, and receive real-time AI feedback."
+            className="bg-[#F5F5F5] shadow-lg rounded-2xl p-6 text-[#2F2F2F]"
           />
 
           <HowItWorksCard
-            icon={<TrophyIcon className="w-7 h-7" />}
+            icon={<TrophyIcon className="w-7 h-7 text-[#1E90FF]" />}
             title="Land Your Dream Job"
             description="Apply with confidence and ace your interviews with your newfound skills."
+            className="bg-[#F5F5F5] shadow-lg rounded-2xl p-6 text-[#2F2F2F]"
           />
         </div>
+
+
       </div>
     </section>
   );

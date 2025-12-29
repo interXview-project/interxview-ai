@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X, LogIn, LogOut, User } from "lucide-react";
 import logo from "../assets/logo-removebg-preview.png";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 export default function Navbar({ routes = [] }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,18 +42,22 @@ export default function Navbar({ routes = [] }) {
             {routes
               .filter((route) => !route.protected || isLoggedIn)
               .map(({ name, path }) => (
-                <Link
+                <NavLink
                   key={name}
                   to={path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 transition-all duration-200 px-4 py-3 rounded-xl border border-transparent hover:border-[#0ea5e9]/20 cursor-pointer"
+                  className={({ isActive }) => `group block ${isActive ? 'text-white bg-[#0ea5e9]/10 border-[#0ea5e9]/20' : 'text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 hover:border-[#0ea5e9]/20'} transition-all duration-200 px-4 py-3 rounded-xl border border-transparent cursor-pointer`}
                 >
-                  {name}
-                </Link>
+                  {({ isActive }) => (
+                    <span className="relative inline-block">
+                      <span className="relative z-10">{name}</span>
+                      <span className={`absolute left-0 -bottom-1 h-[2px] bg-[#4F7CFF] rounded ${isActive ? 'w-full' : 'w-0 group-hover:w-full'} transition-all duration-300`} />
+                    </span>
+                  )}
+                </NavLink>
               ))}
           </div>
 
-          {/* AUTH BUTTON (DESKTOP) */}
           <div className="hidden md:block">
             {isLoggedIn ? (
               <button
@@ -102,14 +106,19 @@ export default function Navbar({ routes = [] }) {
               {routes
                 .filter((route) => !route.protected || isLoggedIn)
                 .map(({ name, path }) => (
-                  <Link
+                  <NavLink
                     key={name}
                     to={path}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 transition-all duration-200 px-4 py-3 rounded-xl"
+                    className={({ isActive }) => `group block ${isActive ? 'text-white bg-[#0ea5e9]/10' : 'text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10'} transition-all duration-200 px-4 py-3 rounded-xl`}
                   >
-                    {name}
-                  </Link>
+                    {({ isActive }) => (
+                      <span className="relative inline-block">
+                        <span className="relative z-10">{name}</span>
+                        <span className={`absolute left-0 -bottom-1 h-[2px] bg-[#4F7CFF] rounded ${isActive ? 'w-full' : 'w-0 group-hover:w-full'} transition-all duration-300`} />
+                      </span>
+                    )}
+                  </NavLink>
                 ))}
             </div>
 
