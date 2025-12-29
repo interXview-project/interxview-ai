@@ -3,29 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    /* White Page Background */
-    <section className="bg-white py-28 px-6">
-      
-      {/* Dark Rounded Card */}
-      <div
-        className="
-          relative
-          max-w-5xl
-          mx-auto
-          rounded-3xl
-          bg-gradient-to-b
-          from-[#0a1628]
-          via-[#0f2847]
-          to-[#1a3a5c]
-          px-10
-          py-20
-          text-center
-          shadow-[0_40px_120px_rgba(0,0,0,0.35)]
-          overflow-hidden
-        "
-      >
+    <section className="relative bg-gradient-to-b from-[#0a1628] via-[#0f2847] to-[#1a3a5c] text-white py-28 px-6">
+      <div className="max-w-5xl mx-auto text-center">
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight text-white">
+        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
           Ready to update your resume and{" "}
           <span className="text-[#0ea5e9]">boost your employability?</span>
         </h1>
@@ -49,6 +30,7 @@ export default function HeroSection() {
               items-center gap-2
               text-white font-semibold
               transition-all duration-300
+              shadow-none
               hover:bg-[#0284c7]
               hover:shadow-[0_0_25px_rgba(14,165,233,0.6)]
             "
