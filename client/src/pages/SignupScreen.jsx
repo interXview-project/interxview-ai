@@ -5,6 +5,7 @@ import Input from "../components/common/Input";
 import PrimaryButton from "../components/common/PrimaryButton";
 import TextLink from "../components/common/TextLink";
 import AIArtwork from "../components/features/AIArtwork";
+import Footer from "../components/Footer";
 
 export default function SignupScreen({ onRegisterSuccess }) {
   const navigate = useNavigate();
@@ -42,8 +43,9 @@ export default function SignupScreen({ onRegisterSuccess }) {
   };
 
   return (
+    <div className="min-h-screen flex flex-col">
     <motion.div
-      className="w-full h-full grid grid-cols-[40%_60%]"
+      className="w-full flex-1 grid grid-cols-[40%_60%]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, x: 100 }}
@@ -132,7 +134,11 @@ export default function SignupScreen({ onRegisterSuccess }) {
             </TextLink>
           </div>
         </div>
+        
       </motion.div>
+      
     </motion.div>
+    <Footer/>
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { BarChart3, Clock, FileText, Award, RefreshCcw } from "lucide-react";
+import Footer from "../components/Footer";
 
 export default function Dashboard() {
   return (
@@ -80,6 +81,7 @@ export default function Dashboard() {
           <RefreshCcw size={18} /> Refresh Data
         </button>
       </div>
+      <Footer/>
     </main>
   );
 }

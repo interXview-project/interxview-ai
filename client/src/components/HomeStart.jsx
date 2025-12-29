@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -20,12 +21,15 @@ export default function HeroSection() {
 
         {/* Button */}
         <div className="mt-10">
-          <button
+            
+        <Link
+  to="/cv-boost"
   className="
+    inline-flex
     bg-[#4F7CFF]
     px-9 py-4
     rounded-full
-    flex items-center gap-2 mx-auto
+    items-center gap-2
     text-white font-semibold
     transition-all duration-300
     shadow-none
@@ -34,8 +38,7 @@ export default function HeroSection() {
 >
   Start your trial
   <span className="text-xl">→</span>
-</button>
-
+</Link>
         </div>
 
         {/* Features */}

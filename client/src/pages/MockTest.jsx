@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { mockStartInterview, mockAnswerQuestion } from "../api/mockInterview";
 import { toast } from "react-hot-toast";
+import Footer from "../components/Footer";
 
 export default function MockTest() {
   const [question, setQuestion] = useState(null);
@@ -36,6 +37,7 @@ export default function MockTest() {
   };
 
   return (
+    <>
     <div style={{ padding: "20px", color: "white", backgroundColor: "#0a1628", minHeight: "100vh" }}>
       <h1>Mock Interview Test</h1>
       {!question && <button onClick={handleStart}>Start Interview</button>}
@@ -53,5 +55,7 @@ export default function MockTest() {
         </div>
       )}
     </div>
+    <Footer/>
+    </>
   );
 }

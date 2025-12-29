@@ -7,6 +7,7 @@ import Input from "../components/common/Input";
 import PrimaryButton from "../components/common/PrimaryButton";
 import toast from "react-hot-toast";
 import AIArtwork from "../components/features/AIArtwork.jsx";
+import Footer from "../components/Footer.jsx";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ export default function LoginScreen() {
   };
 
   return (
+    <>
     <motion.div
       className="w-full h-full grid grid-cols-[40%_60%]"
       initial={{ opacity: 0 }}
@@ -156,5 +158,7 @@ export default function LoginScreen() {
         <AIArtwork />
       </motion.div>
     </motion.div>
+    <Footer/>
+    </>
   );
 }

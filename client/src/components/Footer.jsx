@@ -2,8 +2,9 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#071A2E] text-gray-400 pt-16 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+    <footer className="w-full bg-[#071A2E] text-gray-400 pt-10 px-6">
+      
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-12">
         {/* Brand */}
         <div>
           <div className="flex items-center gap-3 mb-4">
@@ -45,8 +46,9 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Footer bottom */}
       <div className="border-t border-gray-700 mt-12 py-6 text-sm">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-4">
+        <div className="w-full flex flex-col md:flex-row justify-between gap-4">
           <p>© 2025 InterXview-AI. All rights reserved.</p>
           <div className="flex gap-6">
             <span className="hover:text-white cursor-pointer">Terms & Conditions</span>
@@ -58,5 +60,3 @@ export default function Footer() {
     </footer>
   );
 };
-
-
