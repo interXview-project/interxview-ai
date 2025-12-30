@@ -18,7 +18,12 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://interxview-ai-1.onrender.com",
+    credentials: true,
+  })
+);
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -40,6 +45,7 @@ app.get("/test", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
+
   testDBConnection();
 });

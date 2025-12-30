@@ -6,6 +6,7 @@ import UploadSection from "../components/UploadSection";
 import AnalysisSection from "../components/AnalysisSection";
 import FinalCTA from "../components/FinalCTA";
 import Footer from "../components/Footer";
+import api from "../utils/axiosInstance";
 
 export default function CvBoost() {
   const [loading, setLoading] = useState(false);
@@ -35,15 +36,11 @@ export default function CvBoost() {
       );
       setTimeout(() => setStatusMessage("Almost Done..."), 3800);
 
-      const res = await axios.post(
-        "http://localhost:5000/api/cv-text/extract-text",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await api.post("/cv-text/extract-text", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log("SERVER RESPONSE:", res.data);
 

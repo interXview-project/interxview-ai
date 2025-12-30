@@ -1,4 +1,3 @@
-// server/db.js
 import pkg from "pg";
 const { Pool } = pkg;
 import dotenv from "dotenv";
@@ -10,13 +9,18 @@ const pool = new Pool({
   password: process.env.PGPASSWORD,
   database: process.env.PGDATABASE,
   port: process.env.PGPORT,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
 export async function testDBConnection() {
   try {
     const res = await pool.query("SELECT NOW()");
-    console.log("database connection successfuly ! ", res.rows[0].now);
+    console.log("Database connected successfully:", res.rows[0].now);
   } catch (error) {
-    console.log("connection with database failed ");
+    console.error("Database connection failed ", error.message);
   }
 }
+
 export default pool;
