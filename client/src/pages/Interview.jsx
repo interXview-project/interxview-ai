@@ -21,7 +21,7 @@ export default function Interview() {
   const [finalFeedback, setFinalFeedback] = useState(null);
   const [typedFeedback, setTypedFeedback] = useState("");
 
-  const TOTAL_QUESTIONS = 10;
+  const TOTAL_QUESTIONS = 5;
   const [jobRole, setJobRole] = useState("Frontend Developer");
 
   // =========================

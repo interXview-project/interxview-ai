@@ -4,7 +4,7 @@ import {
   generateInterviewFeedback,
 } from "../services/OpenAIService.js";
 
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 5;
 
 // ==============================
 // START INTERVIEW

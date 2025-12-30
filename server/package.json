@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "set PDF_PARSE_DISABLE_TESTS=true && nodemon app.js",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
