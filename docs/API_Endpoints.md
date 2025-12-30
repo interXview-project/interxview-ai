@@ -1,16 +1,18 @@
 # InterXview API Documentation
 
 ## Base URL
-http://localhost:5000/api
 
+https://interxview-ai.onrender.com/api
 
 ---
 
 ## 1. Auth Endpoints (`/api/auth`)
 
 ### POST `/register`
+
 - **Description:** Register a new user.
 - **Request Body:**
+
 ```json
 {
   "username": "John Doe",
@@ -123,3 +125,4 @@ Copy code
 {
   "message": "API is working"
 }
+```
