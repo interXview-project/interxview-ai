@@ -46,5 +46,5 @@ Additionally, it includes an integrated **CV Analyzer** module that allows users
 ## ⚙️ Setup Instructions
 ### 1️⃣ Clone the repository:
 ```bash
-git clone https://github.com/YOUR-ORG/interxview-ai.git
+git clone https://github.com/interXview-project/interxview-ai.git
 cd interxview-ai
